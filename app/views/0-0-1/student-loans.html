@@ -1,0 +1,73 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Student loans" %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+  <a class="govuk-back-link" onclick="history.back();" style="cursor:pointer;" >Back</a>
+<main class="govuk-main-wrapper " id="main-content" role="main">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form action="#" method="post">
+      {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+
+      {{ govukCheckboxes({
+        name: "student-loans",
+        values: data["student-loans"],
+        fieldset: {
+          legend: {
+            text: "Do you repay a student loan?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--xl"
+          }
+        },
+        hint: {
+          text: "Select all that apply."
+        },
+        items: [
+          {
+            value: "Plan 1",
+            text: "Plan 1"
+          },
+          {
+            value: "Plan 2",
+            text: "Plan 2"
+          },
+          {
+            value: "Plan 4",
+            text: "Plan 4"
+          },
+          {
+            divider: "or"
+          },
+          {
+            value: "None",
+            text: "No, I do not repay a student loan",
+            behaviour: "exclusive"
+          }
+        ]
+      }) }}
+    <details class="govuk-details" data-module="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          Check what plan you are on
+        </span>
+      </summary>
+      <div class="govuk-details__text">
+        Insert some info about the different plans and possibly a link to where people can find out more.
+      </div>
+    </details>
+    {{ govukButton({
+      text: "Continue"
+    }) }}
+  </form>
+
+
+  </div>
+</div>
+</main>
+</div>
+
+{% endblock %}

@@ -1,0 +1,165 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Check answers" %}
+
+{% set version="0-0-1" %}
+
+
+{% block content %}
+
+<div class="govuk-width-container">
+  <a class="govuk-back-link" onclick="history.back();" style="cursor:pointer;" >Back</a>
+<main class="govuk-main-wrapper " id="main-content" role="main">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-xl">Check your answers</h1>
+        <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Gross income
+            </dt>
+            <dd class="govuk-summary-list__value">
+              £{{ data['gross-income-amount'] | formatPounds }} {{ data['gross-income-frequency'] }}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="/{{version}}/gross-income">
+                Change<span class="govuk-visually-hidden"> gross income</span>
+              </a>
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Over State Pension age
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {{ data['state-pension-age'] }}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="/{{version}}/state-pension-age">
+                Change<span class="govuk-visually-hidden"> over state pension age</span>
+              </a>
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Registered blind
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {{ data['registered-blind']}}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="/{{version}}/registered-blind">
+                Change<span class="govuk-visually-hidden"> registered blind</span>
+              </a>
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Pension contributions
+            </dt>
+            <dd class="govuk-summary-list__value">
+
+              {% if (data['pension-contributions'] == "none") %}
+                 You do not contribute to a pension
+              {% elseif (data['pension-contributions'] == "percentage") %}
+                 {{ data['pension-contributions-percentage'] }}% a month
+              {% else %}
+                 £{{ data['pension-contributions-amount'] | formatPounds }} a month
+              {% endif %}
+
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="/{{version}}/pension-contributions">
+                Change<span class="govuk-visually-hidden"> pension contributions</span>
+              </a>
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Student loan
+            </dt>
+            <dd class="govuk-summary-list__value">
+                {% for studentLoans in data['student-loans'] %}
+                  <p>{{ studentLoans }}</p>
+                {% endfor %}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="/{{version}}/student-loans">
+                Change<span class="govuk-visually-hidden"> student loan</span>
+              </a>
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Other allowances and deductions
+            </dt>
+            <dd class="govuk-summary-list__value">
+
+              {% if (data['other-allowances'] == "0") %}
+                 None
+              {% elseif (data['other-allowances'] == "yearly") %}
+                 £{{ data['other-allowances-yearly'] | formatPounds }} a year
+              {% else %}
+                 £{{ data['other-allowances-monthly'] | formatPounds }} a month
+              {% endif %}
+
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="/{{version}}/other-allowances">
+                Change<span class="govuk-visually-hidden"> other allowances and deductions</span>
+              </a>
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Tax code
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {% if (data['tax-code'] == "") %}
+              We will use the default allowance
+              {% else %}
+              {{ data['tax-code'] }}
+              {% endif %}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="/{{version}}/taxcode">
+                Change<span class="govuk-visually-hidden"> tax code</span>
+              </a>
+            </dd>
+          </div>
+
+          {% if (data['tax-code'] == "") %}
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Scottish Income Tax Rate
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {{ data['scottish-rate'] }}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="/{{version}}/scottish">
+                Change<span class="govuk-visually-hidden"> Scottish Income Tax Rate</span>
+              </a>
+            </dd>
+          </div>
+          {% endif %}
+          
+
+        </dl>
+        <form action="#" method="post" novalidate>
+
+          <input type="hidden" name="answers-checked" value="true">
+  
+          {{ govukButton({
+            text: "Calculate take-home pay"
+          }) }}
+  
+        </form>
+
+  </div>
+</div>
+</main>
+</div>
+
+{% endblock %}

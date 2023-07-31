@@ -1,0 +1,95 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Other allowances" %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+  <a class="govuk-back-link" onclick="history.back();" style="cursor:pointer;" >Back</a>
+<main class="govuk-main-wrapper " id="main-content" role="main">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form action="#" method="post">
+
+      {% from "govuk/components/radios/macro.njk" import govukRadios %}
+      {% from "govuk/components/input/macro.njk" import govukInput %}
+
+      {% set monthlyHtml %}
+      {{ govukInput({
+        id: "other-allowances-monthly",
+        name: "other-allowances-monthly",
+        spellcheck: false,
+        classes: "govuk-!-width-one-third",
+        prefix: {
+          text: "£"
+        },
+        label: {
+          text: "Amount, in pounds"
+        }
+      }) }}
+      {% endset -%}
+
+      {% set yearlyHtml %}
+      {{ govukInput({
+        id: "other-allowances-yearly",
+        name: "other-allowances-yearly",
+        classes: "govuk-!-width-one-third",
+        prefix: {
+          text: "£"
+        },
+        label: {
+          text: "Amount, in pounds"
+        }
+      }) }}
+      {% endset -%}
+
+      {{ govukRadios({
+        name: "other-allowances",
+        fieldset: {
+          legend: {
+            text: "Include other allowances or deductions?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--xl"
+          }
+        },
+        hint: {
+          text: "This includes anything that is deducted from your pay before you have to pay tax. For example, employee benefits."
+        },
+        items: [
+          {
+            value: "monthly",
+            text: "Yes, I have a monthly allowance/deduction",
+            conditional: {
+              html: monthlyHtml
+            }
+          },
+          {
+            value: "yearly",
+            text: "Yes, I have a yearly allowance/deduction",
+            conditional: {
+              html: yearlyHtml
+            }
+          },
+          {
+            divider: "or"
+          },
+          {
+            value: "0",
+            text: "No, I do not have any allowances or deductions"
+          }
+        ]
+      }) }}
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+
+  </div>
+</div>
+</main>
+</div>
+
+{% endblock %}
