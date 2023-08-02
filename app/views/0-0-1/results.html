@@ -253,11 +253,29 @@
 
     <h2 class="govuk-heading-m">Our assumptions</h2>
     <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
-      <li>You have 1 job</li>
+
+      {% if (data['income-type'] == "job") %}
+        <li>You have 1 job.</li>
+      {% else %}
+        <li>You have 1 private pension.</li>
+      {% endif %}
+
+      
       {% if (data['tax-code'] == "") %}
-      <li>You did not include a tax code so we have calculated this using the default tax-free allowance £12,570.</li>
-          {% endif %}
-      <li>You make <a href="https://www.gov.uk/national-insurance-rates-letters/category-letters" class="govuk-link" target="_blank">Class 1 National Insurance contributions: Categories A, H and M (opens in a new tab)</a></li>
+        <li>You did not include a tax code so we have calculated this using the default tax-free allowance £12,570.</li>
+      {% endif %}
+
+
+      {% if (data['income-type'] == "job") %}
+        {% if (data['state-pension-age'] == "No") %}
+          <li>You make <a href="https://www.gov.uk/national-insurance-rates-letters/category-letters" class="govuk-link" target="_blank">Class 1 National Insurance contributions: Categories A, H and M (opens in a new tab)</a></li>
+        {% else %}
+          <li>You do not pay National Insurance because you are over State Pension age.</li>
+        {% endif %}
+      {% else %}
+        <li>You do not pay National Insurance on a private pension.</li>
+      {% endif %}
+
     </ul>
 
     {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}

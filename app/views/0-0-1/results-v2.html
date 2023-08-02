@@ -18,27 +18,36 @@
       Your estimated take-home pay for 2023/24 - Version 2
     </h1>
 
-    {% from "govuk/components/tabs/macro.njk" import govukTabs %}
-    {% from "govuk/components/table/macro.njk" import govukTable %}
-
-    {% set yearlyHtml %}
-
     <div class="govuk-panel govuk-panel--confirmation">
-      <h2 class="govuk-panel__title">£{{ data['takeHomePay'] | toFixed(2) | formatPounds }}<br>
-        <span class="govuk-panel__body">a year</span>
+      <h2 class="govuk-panel__title">
+        £{{ data['takeHomePay'] | toFixed(2) | formatPounds }} <span class="govuk-panel__body">a year</span><br>
+        £{{ data['takeHomePay_monthly'] | round(2) | toFixed(2) | formatPounds }} <span class="govuk-panel__body">a month</span><br>
+        £{{ data['takeHomePay_weekly'] | round(2) | toFixed(2) | formatPounds  }} <span class="govuk-panel__body">a week</span>
       </h2>
     </div>
 
     <h2 class="govuk-heading-m">How we calculated this:</h2>
 
     <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header"></th>
+          <th scope="col" class="govuk-table__header govuk-table__header--numeric">Yearly</th>
+          <th scope="col" class="govuk-table__header govuk-table__header--numeric">Monthly</th>
+          <th scope="col" class="govuk-table__header govuk-table__header--numeric">Weekly</th>
+        </tr>
+      </thead>
       <tbody class="govuk-table__body">
         <tr class="govuk-table__row">
           <td class="govuk-table__cell govuk-!-font-weight-bold">Gross income</td>
           <td class="govuk-table__cell govuk-!-font-weight-bold govuk-table__cell--numeric">£{{ data['yearlySalary'] | toFixed(2) | formatPounds }}</td>
+          <td class="govuk-table__cell govuk-!-font-weight-bold govuk-table__cell--numeric">£{{ data['monthlySalary'] | round(2) | toFixed(2) | formatPounds }}</td>
+          <td class="govuk-table__cell govuk-!-font-weight-bold govuk-table__cell--numeric">£{{ data['weeklySalary'] | round(2) | toFixed(2) | formatPounds }}</td>
         </tr>
         <tr class="govuk-table__row">
           <td class="govuk-table__cell">Tax-free amount</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['taxFreeAmount'] | formatPounds }}.00</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['taxFreeAmount'] | formatPounds }}.00</td>
           <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['taxFreeAmount'] | formatPounds }}.00</td>
         </tr>
 
@@ -46,218 +55,90 @@
         <tr class="govuk-table__row">
           <td class="govuk-table__cell">Pension contributions</td>
           <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['yearlyPensionContributions'] | toFixed(2) | formatPounds }}</td>
-        </tr>
-        {% endif %}
-        {% if (data['otherAllowancesTotal'] != 0) %}
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell">Other allowances</td>
-          <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['otherAllowancesTotal'] | toFixed(2) | formatPounds }}</td>
-        </tr>
-        {% endif %}
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell govuk-!-font-weight-bold">Taxable income</td>
-          <td class="govuk-table__cell govuk-!-font-weight-bold govuk-table__cell--numeric">£{{ data['taxableIncomeTotal'] | toFixed(2) | formatPounds }}</td>
-        </tr>
-        {% if (data['basicRateTotal'] != 0) %}
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell">Income tax at 20%</td>
-          <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['basicRateTotal'] | toFixed(2) | formatPounds }}</td>
-        </tr>
-        {% endif %}
-        {% if (data['higherRateTotal'] != 0) %}
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell">Income tax at 40%</td>
-          <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['higherRateTotal'] | toFixed(2) | formatPounds }}</td>
-        </tr>
-        {% endif %}
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell">National Insurance</td>
-          <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['nationalInsuranceTotal'] | toFixed(2) | formatPounds }}</td>
-        </tr>
-        {% if (data['yearlyStudentLoan'] != 0) %}
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell">Student loan</td>
-          <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['yearlyStudentLoan'] | toFixed(2) | formatPounds }}</td>
-        </tr>
-        {% endif %}
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell govuk-!-font-weight-bold">Take-home pay</td>
-          <td class="govuk-table__cell govuk-!-font-weight-bold govuk-table__cell--numeric">£{{ data['takeHomePay'] | toFixed(2) | formatPounds }}</td>
-        </tr>
-      </tbody>
-    </table>
-
-    {% endset -%}
-
-
-    {% set monthlyHtml %}
-    <div class="govuk-panel govuk-panel--confirmation">
-      <h2 class="govuk-panel__title">£{{ data['takeHomePay_monthly'] | round(2) | toFixed(2) | formatPounds }}<br>
-        <span class="govuk-panel__body">a month</span>
-      </h2>
-    </div>
-
-    <h2 class="govuk-heading-m">How we calculated this:</h2>
-
-    <table class="govuk-table">
-      <tbody class="govuk-table__body">
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell govuk-!-font-weight-bold">Gross income</td>
-          <td class="govuk-table__cell govuk-!-font-weight-bold govuk-table__cell--numeric">£{{ data['monthlySalary'] | round(2) | toFixed(2) | formatPounds }}</td>
-        </tr>
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell">Tax-free amount</td>
-          <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['taxFreeAmount'] | formatPounds }}.00</td>
-        </tr>
-
-        {% if (data['yearlyPensionContributions'] != 0) %}
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell">Pension contributions</td>
           <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['monthlyPensionContributions'] | round(2) | toFixed(2) | formatPounds }}</td>
-        </tr>
-        {% endif %}
-        {% if (data['otherAllowancesTotal'] != 0) %}
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell">Other allowances</td>
-          <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['otherAllowancesTotal_monthly'] | round(2) | toFixed(2) | formatPounds }}</td>
-        </tr>
-        {% endif %}
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell govuk-!-font-weight-bold">Taxable income</td>
-          <td class="govuk-table__cell govuk-!-font-weight-bold govuk-table__cell--numeric">£{{ data['taxableIncomeTotal_monthly'] | round(2) | toFixed(2) | formatPounds }}</td>
-        </tr>
-        {% if (data['basicRateTotal'] != 0) %}
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell">Income tax at 20%</td>
-          <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['basicRateTotal_monthly'] | round(2) | toFixed(2) | formatPounds }}</td>
-        </tr>
-        {% endif %}
-        {% if (data['higherRateTotal'] != 0) %}
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell">Income tax at 40%</td>
-          <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['higherRateTotal_monthly'] | round(2) | toFixed(2) | formatPounds }}</td>
-        </tr>
-        {% endif %}
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell">National Insurance</td>
-          <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['nationalInsuranceTotal_monthly'] | round(2) | toFixed(2) | formatPounds }}</td>
-        </tr>
-        {% if (data['yearlyStudentLoan'] != 0) %}
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell">Student loan</td>
-          <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['monthlyStudentLoan'] | round(2) | toFixed(2) | formatPounds }}</td>
-        </tr>
-        {% endif %}
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell govuk-!-font-weight-bold">Take-home pay</td>
-          <td class="govuk-table__cell govuk-!-font-weight-bold govuk-table__cell--numeric">£{{ data['takeHomePay_monthly'] | round(2) | toFixed(2) | formatPounds }}</td>
-        </tr>
-      </tbody>
-    </table>
-    {% endset -%}
-
-
-    {% set weeklyHtml %}
-    <div class="govuk-panel govuk-panel--confirmation">
-      <h2 class="govuk-panel__title">£{{ data['takeHomePay_weekly'] | round(2) | toFixed(2) | formatPounds  }}<br>
-        <span class="govuk-panel__body">a week</span>
-      </h2>
-    </div>
-
-    <h2 class="govuk-heading-m">How we calculated this:</h2>
-
-    <table class="govuk-table">
-      <tbody class="govuk-table__body">
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell govuk-!-font-weight-bold">Gross income</td>
-          <td class="govuk-table__cell govuk-!-font-weight-bold govuk-table__cell--numeric">£{{ data['weeklySalary'] | round(2) | toFixed(2) | formatPounds }}</td>
-        </tr>
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell">Tax-free amount</td>
-          <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['taxFreeAmount'] | formatPounds }}.00</td>
-        </tr>
-
-        {% if (data['yearlyPensionContributions'] != 0) %}
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell">Pension contributions</td>
           <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['weeklyPensionContributions'] | round(2) | toFixed(2) | formatPounds }}</td>
         </tr>
         {% endif %}
         {% if (data['otherAllowancesTotal'] != 0) %}
         <tr class="govuk-table__row">
           <td class="govuk-table__cell">Other allowances</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['otherAllowancesTotal'] | toFixed(2) | formatPounds }}</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['otherAllowancesTotal_monthly'] | round(2) | toFixed(2) | formatPounds }}</td>
           <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['otherAllowancesTotal_weekly'] | round(2) | toFixed(2) | formatPounds }}</td>
         </tr>
         {% endif %}
         <tr class="govuk-table__row">
           <td class="govuk-table__cell govuk-!-font-weight-bold">Taxable income</td>
+          <td class="govuk-table__cell govuk-!-font-weight-bold govuk-table__cell--numeric">£{{ data['taxableIncomeTotal'] | toFixed(2) | formatPounds }}</td>
+          <td class="govuk-table__cell govuk-!-font-weight-bold govuk-table__cell--numeric">£{{ data['taxableIncomeTotal_monthly'] | round(2) | toFixed(2) | formatPounds }}</td>
           <td class="govuk-table__cell govuk-!-font-weight-bold govuk-table__cell--numeric">£{{ data['taxableIncomeTotal_weekly'] | round(2) | toFixed(2) | formatPounds }}</td>
         </tr>
         {% if (data['basicRateTotal'] != 0) %}
         <tr class="govuk-table__row">
           <td class="govuk-table__cell">Income tax at 20%</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['basicRateTotal'] | toFixed(2) | formatPounds }}</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['basicRateTotal_monthly'] | round(2) | toFixed(2) | formatPounds }}</td>
           <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['basicRateTotal_weekly'] | round(2) | toFixed(2) | formatPounds }}</td>
         </tr>
         {% endif %}
         {% if (data['higherRateTotal'] != 0) %}
         <tr class="govuk-table__row">
           <td class="govuk-table__cell">Income tax at 40%</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['higherRateTotal'] | toFixed(2) | formatPounds }}</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['higherRateTotal_monthly'] | round(2) | toFixed(2) | formatPounds }}</td>
           <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['higherRateTotal_weekly'] | round(2) | toFixed(2) | formatPounds }}</td>
         </tr>
         {% endif %}
         <tr class="govuk-table__row">
           <td class="govuk-table__cell">National Insurance</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['nationalInsuranceTotal'] | toFixed(2) | formatPounds }}</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['nationalInsuranceTotal_monthly'] | round(2) | toFixed(2) | formatPounds }}</td>
           <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['nationalInsuranceTotal_weekly'] | round(2) | toFixed(2) | formatPounds }}</td>
         </tr>
         {% if (data['yearlyStudentLoan'] != 0) %}
         <tr class="govuk-table__row">
           <td class="govuk-table__cell">Student loan</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['yearlyStudentLoan'] | toFixed(2) | formatPounds }}</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['monthlyStudentLoan'] | round(2) | toFixed(2) | formatPounds }}</td>
           <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['weeklyStudentLoan'] | round(2) | toFixed(2) | formatPounds }}</td>
         </tr>
         {% endif %}
         <tr class="govuk-table__row">
           <td class="govuk-table__cell govuk-!-font-weight-bold">Take-home pay</td>
+          <td class="govuk-table__cell govuk-!-font-weight-bold govuk-table__cell--numeric">£{{ data['takeHomePay'] | toFixed(2) | formatPounds }}</td>
+          <td class="govuk-table__cell govuk-!-font-weight-bold govuk-table__cell--numeric">£{{ data['takeHomePay_monthly'] | round(2) | toFixed(2) | formatPounds }}</td>
           <td class="govuk-table__cell govuk-!-font-weight-bold govuk-table__cell--numeric">£{{ data['takeHomePay_weekly'] | round(2) | toFixed(2) | formatPounds }}</td>
         </tr>
       </tbody>
     </table>
-    {% endset -%}
-
-    {{ govukTabs({
-      items: [
-        {
-          label: "Yearly",
-          id: "yearly",
-          panel: {
-            html: yearlyHtml
-          }
-        },
-        {
-          label: "Monthly",
-          id: "monthly",
-          panel: {
-            html: monthlyHtml
-          }
-        },
-        {
-          label: "Weekly",
-          id: "weekly",
-          panel: {
-            html: weeklyHtml
-          }
-        }
-      ]
-    }) }}
 
 
 
     <h2 class="govuk-heading-m">Our assumptions</h2>
     <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
-      <li>You have 1 job</li>
+
+      {% if (data['income-type'] == "job") %}
+        <li>You have 1 job.</li>
+      {% else %}
+        <li>You have 1 private pension.</li>
+      {% endif %}
+
+      
       {% if (data['tax-code'] == "") %}
-      <li>You did not include a tax code so we have calculated this using the default tax-free allowance £12,570.</li>
-          {% endif %}
-      <li>You make <a href="https://www.gov.uk/national-insurance-rates-letters/category-letters" class="govuk-link" target="_blank">Class 1 National Insurance contributions: Categories A, H and M (opens in a new tab)</a></li>
+        <li>You did not include a tax code so we have calculated this using the default tax-free allowance £12,570.</li>
+      {% endif %}
+
+
+      {% if (data['income-type'] == "job") %}
+        {% if (data['state-pension-age'] == "No") %}
+          <li>You make <a href="https://www.gov.uk/national-insurance-rates-letters/category-letters" class="govuk-link" target="_blank">Class 1 National Insurance contributions: Categories A, H and M (opens in a new tab)</a></li>
+        {% else %}
+          <li>You do not pay National Insurance because you are over State Pension age.</li>
+        {% endif %}
+      {% else %}
+        <li>You do not pay National Insurance on a private pension.</li>
+      {% endif %}
+      
     </ul>
 
     {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}

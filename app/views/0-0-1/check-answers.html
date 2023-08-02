@@ -30,6 +30,24 @@
           </div>
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
+              Income type
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {% if (data['income-type'] == "job") %}
+                 Income from a job
+              {% else %}
+                 Private pension income
+              {% endif %}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="/{{version}}/income-type">
+                Change<span class="govuk-visually-hidden"> gross income</span>
+              </a>
+            </dd>
+          </div>
+          {% if (data['income-type'] == "job") %}
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
               Over State Pension age
             </dt>
             <dd class="govuk-summary-list__value">
@@ -38,19 +56,6 @@
             <dd class="govuk-summary-list__actions">
               <a class="govuk-link" href="/{{version}}/state-pension-age">
                 Change<span class="govuk-visually-hidden"> over state pension age</span>
-              </a>
-            </dd>
-          </div>
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-              Registered blind
-            </dt>
-            <dd class="govuk-summary-list__value">
-              {{ data['registered-blind']}}
-            </dd>
-            <dd class="govuk-summary-list__actions">
-              <a class="govuk-link" href="/{{version}}/registered-blind">
-                Change<span class="govuk-visually-hidden"> registered blind</span>
               </a>
             </dd>
           </div>
@@ -75,6 +80,21 @@
               </a>
             </dd>
           </div>
+          {% endif %}
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Registered blind
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {{ data['registered-blind']}}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="/{{version}}/registered-blind">
+                Change<span class="govuk-visually-hidden"> registered blind</span>
+              </a>
+            </dd>
+          </div>
+          
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
               Student loan
@@ -144,8 +164,6 @@
             </dd>
           </div>
           {% endif %}
-          
-
         </dl>
         <form action="#" method="post" novalidate>
 
