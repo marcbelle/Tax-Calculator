@@ -83,6 +83,10 @@ module.exports = function(router) {
           yearlyStudentLoan =(yearlySalary - 27295) * 0.09 //9% rate and £27,295 threshold
         } else if (request.session.data['student-loans'] == "Plan 4"){
           yearlyStudentLoan =(yearlySalary - 27660) * 0.09 //9% rate and £27,660 threshold
+        } else if (request.session.data['student-loans'] == "Plan 5"){
+          yearlyStudentLoan =(yearlySalary - 25000) * 0.09 //9% rate and £25,000 threshold
+        } else if (request.session.data['student-loans'] == "Postgraduate Loan"){
+          yearlyStudentLoan =(yearlySalary - 21000) * 0.06 //6% rate and £21,000 threshold
         } else { 
           yearlyStudentLoan =(yearlySalary - 22015) * 0.09 //they picked multiple so just work it out like Plan 1
         }
@@ -152,6 +156,10 @@ if the anwser is NOT these look for checkmode and determine if go to end or inco
         yearlyStudentLoan =(yearlySalary - 27295) * 0.09 //9% rate and £27,295 threshold
       } else if (request.session.data['student-loans'] == "Plan 4"){
         yearlyStudentLoan =(yearlySalary - 27660) * 0.09 //9% rate and £27,660 threshold
+      } else if (request.session.data['student-loans'] == "Plan 5"){
+        yearlyStudentLoan =(yearlySalary - 25000) * 0.09 //9% rate and £25,000 threshold
+      } else if (request.session.data['student-loans'] == "Postgraduate Loan"){
+        yearlyStudentLoan =(yearlySalary - 21000) * 0.06 //6% rate and £21,000 threshold
       } else { 
         yearlyStudentLoan =(yearlySalary - 22015) * 0.09 //they picked multiple so just work it out like Plan 1
       }
@@ -202,6 +210,10 @@ if the anwser is NOT these look for checkmode and determine if go to end or inco
         yearlyStudentLoan =(yearlySalary - 27295) * 0.09 //9% rate and £27,295 threshold
       } else if (request.session.data['student-loans'] == "Plan 4"){
         yearlyStudentLoan =(yearlySalary - 27660) * 0.09 //9% rate and £27,660 threshold
+      } else if (request.session.data['student-loans'] == "Plan 5"){
+        yearlyStudentLoan =(yearlySalary - 25000) * 0.09 //9% rate and £25,000 threshold
+      } else if (request.session.data['student-loans'] == "Postgraduate Loan"){
+        yearlyStudentLoan =(yearlySalary - 21000) * 0.06 //6% rate and £21,000 threshold
       } else { 
         yearlyStudentLoan =(yearlySalary - 22015) * 0.09 //they picked multiple so just work it out like Plan 1
       }
@@ -307,6 +319,10 @@ if the anwser is NOT these look for checkmode and determine if go to end or inco
       yearlyStudentLoan =(yearlySalary - 27295) * 0.09 //9% rate and £27,295 threshold
     } else if (request.session.data['student-loans'] == "Plan 4"){
       yearlyStudentLoan =(yearlySalary - 27660) * 0.09 //9% rate and £27,660 threshold
+    } else if (request.session.data['student-loans'] == "Plan 5"){
+      yearlyStudentLoan =(yearlySalary - 25000) * 0.09 //9% rate and £25,000 threshold
+    } else if (request.session.data['student-loans'] == "Postgraduate Loan"){
+      yearlyStudentLoan =(yearlySalary - 21000) * 0.06 //6% rate and £21,000 threshold
     } else { 
       yearlyStudentLoan =(yearlySalary - 22015) * 0.09 //they picked multiple so just work it out like Plan 1
     }
