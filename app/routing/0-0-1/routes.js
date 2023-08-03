@@ -29,30 +29,106 @@ module.exports = function(router) {
   })
   router.post('/' + version + '/gross-income', function(request, response) {
 
-    // Calculate a yearly salary
-    var yearlySalary = request.session.data['yearlySalary'];
 
-    if (request.session.data['gross-income-frequency'] == "a month"){ 
-      yearlySalary = request.session.data['gross-income-amount'] * 12
-      request.session.data['yearlySalary'] = yearlySalary;
-    } else if (request.session.data['gross-income-frequency'] == "every 4 weeks"){
-      yearlySalary = request.session.data['gross-income-amount'] * 13
-      request.session.data['yearlySalary'] = yearlySalary;
-    } else if (request.session.data['gross-income-frequency'] == "a week") {
-      yearlySalary = request.session.data['gross-income-amount'] * 52
-      request.session.data['yearlySalary'] = yearlySalary;
-    } else if (request.session.data['gross-income-frequency'] == "a day") {
+    if (request.session.data['gross-income-frequency'] == "a day"){ 
+      // Need to work out time before anything else
+      response.redirect('/' + version + '/number-days')
+
+    } else if (request.session.data['gross-income-frequency'] == "an hour"){
+      // Need to work out time before anything else
+      response.redirect('/' + version + '/number-hours')
+
+    } else { 
+      // We can work out the time so move on to calculating the yearly amount
+      // and checking to see if you can return to Check Answers or Next page
+      
+      // Calculate a yearly salary for everything other than Daily and hourly
+      var yearlySalary = request.session.data['yearlySalary'];
+
+      if (request.session.data['gross-income-frequency'] == "a month"){ 
+        yearlySalary = request.session.data['gross-income-amount'] * 12
+        request.session.data['yearlySalary'] = yearlySalary;
+      } else if (request.session.data['gross-income-frequency'] == "every 4 weeks"){
+        yearlySalary = request.session.data['gross-income-amount'] * 13
+        request.session.data['yearlySalary'] = yearlySalary;
+      } else if (request.session.data['gross-income-frequency'] == "a week") {
+        yearlySalary = request.session.data['gross-income-amount'] * 52
+        request.session.data['yearlySalary'] = yearlySalary;
+      } else { // Set to yearly.
+        yearlySalary = request.session.data['gross-income-amount']
+        request.session.data['yearlySalary'] = yearlySalary;
+      }
+
+      //Now check if we are going back to check answers or the next page
+      var checkMode = request.session.data['checkMode'];
+      if (checkMode) {
+
+        // if pension contributions are a percentage
+        // recalculate amount if gross amount changed
+        if (request.session.data['pension-contributions'] == "percentage") {
+          yearlyPensionContributions = (request.session.data['pension-contributions-percentage'] / 100) * request.session.data['yearlySalary']
+          request.session.data['yearlyPensionContributions'] = yearlyPensionContributions;
+        }
+
+        // recalculate student loan if gross changed
+        var yearlyStudentLoan = request.session.data['yearlyStudentLoan'];
+        var yearlySalary = request.session.data['yearlySalary'];
+
+
+        if (request.session.data['student-loans'] == "None"){ 
+          yearlyStudentLoan = 0 // no student loan so set to 0 incase it had been changed 
+        } else if (request.session.data['student-loans'] == "Plan 1"){
+          yearlyStudentLoan =(yearlySalary - 22015) * 0.09 //9% rate and £22,015 threshold
+        } else if (request.session.data['student-loans'] == "Plan 2"){
+          yearlyStudentLoan =(yearlySalary - 27295) * 0.09 //9% rate and £27,295 threshold
+        } else if (request.session.data['student-loans'] == "Plan 4"){
+          yearlyStudentLoan =(yearlySalary - 27660) * 0.09 //9% rate and £27,660 threshold
+        } else { 
+          yearlyStudentLoan =(yearlySalary - 22015) * 0.09 //they picked multiple so just work it out like Plan 1
+        }
+
+        if (yearlyStudentLoan < 0) {
+          yearlyStudentLoan = 0;
+        }
+
+        request.session.data['yearlyStudentLoan'] = yearlyStudentLoan;
+        response.redirect('/' + version + '/check-answers')
+
+      } else {
+        response.redirect('/' + version + '/income-type')
+      }
+
+
+    }
+
+
+    /*
+if the anwser is hourly or weekly go to the time page regardless of if checkmode is on.
+if the anwser is NOT these look for checkmode and determine if go to end or income type and calculate amount
+    */
+
+/*
+    else if (request.session.data['gross-income-frequency'] == "a day") {
       yearlySalary = (request.session.data['gross-income-amount'] * 5) * 52
       request.session.data['yearlySalary'] = yearlySalary;
     } else if (request.session.data['gross-income-frequency'] == "an hour") {
       yearlySalary = (request.session.data['gross-income-amount'] * 37.5) * 52
       request.session.data['yearlySalary'] = yearlySalary;
-    } else { // it's been set as yearly
-      yearlySalary = request.session.data['gross-income-amount']
-      request.session.data['yearlySalary'] = yearlySalary;
     }
+*/
 
+       
+  })
 
+  router.post('/' + version + '/number-days', function(request, response) {
+
+    // Calculate a yearly salary
+    var yearlySalary = request.session.data['yearlySalary'];
+    yearlySalary = (request.session.data['gross-income-amount'] * request.session.data['number-days']) * 52
+    request.session.data['yearlySalary'] = yearlySalary;
+    console.log(yearlySalary);
+
+    //Now check if we are going back to check answers or the next page
     var checkMode = request.session.data['checkMode'];
     if (checkMode) {
 
@@ -83,16 +159,70 @@ module.exports = function(router) {
       if (yearlyStudentLoan < 0) {
         yearlyStudentLoan = 0;
       }
-      request.session.data['yearlyStudentLoan'] = yearlyStudentLoan;
 
+      request.session.data['yearlyStudentLoan'] = yearlyStudentLoan;
       response.redirect('/' + version + '/check-answers')
       
-
     } else {
       response.redirect('/' + version + '/income-type')
     }
-       
+
+    
   })
+
+  router.post('/' + version + '/number-hours', function(request, response) {
+
+    // Calculate a yearly salary
+    var yearlySalary = request.session.data['yearlySalary'];
+    yearlySalary = (request.session.data['gross-income-amount'] * request.session.data['number-hours']) * 52
+    request.session.data['yearlySalary'] = yearlySalary;
+    console.log(yearlySalary);
+
+    //Now check if we are going back to check answers or the next page
+    var checkMode = request.session.data['checkMode'];
+    if (checkMode) {
+
+      // if pension contributions are a percentage
+      // recalculate amount if gross amount changed
+      if (request.session.data['pension-contributions'] == "percentage") {
+        yearlyPensionContributions = (request.session.data['pension-contributions-percentage'] / 100) * request.session.data['yearlySalary']
+        request.session.data['yearlyPensionContributions'] = yearlyPensionContributions;
+      }
+
+      // recalculate student loan if gross changed
+      var yearlyStudentLoan = request.session.data['yearlyStudentLoan'];
+      var yearlySalary = request.session.data['yearlySalary'];
+
+
+      if (request.session.data['student-loans'] == "None"){ 
+        yearlyStudentLoan = 0 // no student loan so set to 0 incase it had been changed 
+      } else if (request.session.data['student-loans'] == "Plan 1"){
+        yearlyStudentLoan =(yearlySalary - 22015) * 0.09 //9% rate and £22,015 threshold
+      } else if (request.session.data['student-loans'] == "Plan 2"){
+        yearlyStudentLoan =(yearlySalary - 27295) * 0.09 //9% rate and £27,295 threshold
+      } else if (request.session.data['student-loans'] == "Plan 4"){
+        yearlyStudentLoan =(yearlySalary - 27660) * 0.09 //9% rate and £27,660 threshold
+      } else { 
+        yearlyStudentLoan =(yearlySalary - 22015) * 0.09 //they picked multiple so just work it out like Plan 1
+      }
+
+      if (yearlyStudentLoan < 0) {
+        yearlyStudentLoan = 0;
+      }
+
+      request.session.data['yearlyStudentLoan'] = yearlyStudentLoan;
+      response.redirect('/' + version + '/check-answers')
+      
+    } else {
+      response.redirect('/' + version + '/income-type')
+    }
+
+    
+  })
+
+
+
+
   router.post('/' + version + '/income-type', function(request, response) {
 
     var checkMode = request.session.data['checkMode'];
@@ -142,7 +272,6 @@ module.exports = function(router) {
 
     request.session.data['yearlyPensionContributions'] = yearlyPensionContributions;
 
-
     var checkMode = request.session.data['checkMode'];
     if (checkMode) {
       response.redirect('/' + version + '/check-answers')
@@ -151,6 +280,8 @@ module.exports = function(router) {
     }
     
   })
+
+
   router.post('/' + version + '/registered-blind', function(request, response) {
 
     var checkMode = request.session.data['checkMode'];

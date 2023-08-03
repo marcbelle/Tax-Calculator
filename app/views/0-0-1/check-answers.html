@@ -28,6 +28,36 @@
               </a>
             </dd>
           </div>
+          {% if (data['gross-income-frequency'] == "a day") %}
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Days worked a week
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {{ data['number-days'] }}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="/{{version}}/number-days">
+                Change<span class="govuk-visually-hidden"> number of days worked a week</span>
+              </a>
+            </dd>
+          </div>
+          {% endif %}
+          {% if (data['gross-income-frequency'] == "an hour") %}
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Hours worked a week
+            </dt>
+            <dd class="govuk-summary-list__value">
+              {{ data['number-hours'] }}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="/{{version}}/number-hours">
+                Change<span class="govuk-visually-hidden"> number of hours worked a week</span>
+              </a>
+            </dd>
+          </div>
+          {% endif %}
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
               Income type
