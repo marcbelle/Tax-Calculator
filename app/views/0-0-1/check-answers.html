@@ -95,12 +95,12 @@
             </dt>
             <dd class="govuk-summary-list__value">
 
-              {% if (data['pension-contributions'] == "none") %}
-                 You do not contribute to a pension
-              {% elseif (data['pension-contributions'] == "percentage") %}
-                 {{ data['pension-contributions-percentage'] }}% a month
+              {% if (data['pension-contributions'] == "percentage")  %}
+                {{ data['pension-contributions-percentage'] }}% a month
+              {% elseif (data['pension-contributions'] == "fixed") %}
+                £{{ data['pension-contributions-amount'] | formatPounds }} a month
               {% else %}
-                 £{{ data['pension-contributions-amount'] | formatPounds }} a month
+                You do not make pension contributions.
               {% endif %}
 
             </dd>

@@ -18,6 +18,7 @@
       {% set percentageHtml %}
       {{ govukInput({
         id: "pension-contributions-percentage",
+        value: data['pension-contributions-percentage'],
         name: "pension-contributions-percentage",
         spellcheck: false,
         classes: "govuk-!-width-one-third",
@@ -33,6 +34,7 @@
       {% set fixedHtml %}
       {{ govukInput({
         id: "pension-contributions-amount",
+        value: data['pension-contributions-amount'],
         name: "pension-contributions-amount",
         classes: "govuk-!-width-one-third",
         prefix: {
@@ -46,27 +48,29 @@
 
       {{ govukRadios({
         name: "pension-contributions",
+        value: data['pension-contributions'],
         fieldset: {
           legend: {
-            text: "Do you make monthly pension contributions?",
+            text: "What are your monthly pension contributions?",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--xl"
           }
         },
         hint: {
-          text: "Select one option. This might be a workplace pension."
+          text: "You can enter this as a percentage of your income or an actual amount in pounds. This might be a workplace pension.
+          "
         },
         items: [
           {
             value: "percentage",
-            text: "Yes, I pay a percentage of my income each month",
+            text: "A percentage of your income",
             conditional: {
               html: percentageHtml
             }
           },
           {
             value: "fixed",
-            text: "Yes, I pay a fixed amount in pounds each month",
+            text: "An actual amount in pounds",
             conditional: {
               html: fixedHtml
             }
@@ -76,7 +80,7 @@
           },
           {
             value: "none",
-            text: "No, I do not make pension contributions"
+            text: "None"
           }
         ]
       }) }}
