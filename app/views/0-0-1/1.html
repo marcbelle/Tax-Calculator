@@ -35,8 +35,9 @@
     </h1>
 
       <p>Use this service to estimate your take-home pay and how much Income Tax and National Insurance you should pay for the current tax year (6 April 2023 to 5 April 2024).</p>
-      <p>If you're self-employed, the self-employed ready reckoner tool can help you budget for your tax bill.</p>
-      <p>You may be able to claim a refund if you've paid too much tax.</p>
+      <p>You may be able to <a href="https://www.gov.uk/claim-tax-refund" class="govuk-link">claim a refund</a> if you've paid too much tax.</p>
+
+      
       
         <a href="/{{version}}/gross-income" role="button" draggable="false" class="govuk-button govuk-button--start" data-module="govuk-button">
           Start now
@@ -49,22 +50,25 @@
     <p class="govuk-body">You cannot get an estimate online if:</p>
     <ul class="govuk-list govuk-list--bullet">
       <li>you're not a Pay As You Earn (PAYE) taxpayer</li>
-      <li>your only income is from self employment or <a href="https://www.gov.uk/income-tax/taxfree-and-taxable-state-benefits" class="govuk-link" target="_blank">state benefits (opens in a new tab)</a>, such as State Pension</li>
+      <li>your only income is from self employment or <a href="https://www.gov.uk/income-tax/taxfree-and-taxable-state-benefits" class="govuk-link">state benefits</a>, such as State Pension</li>
+      <li>you're self-employed; the <a href="https://www.gov.uk/self-assessment-ready-reckoner" class="govuk-link">self-employed ready reckoner</a> tool can help you budget for your tax bill</li>
     </ul>
     {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+
+    
 
     {{ govukInsetText({
       text: "If you have more than one job, use the calculator once for each job."
     }) }}
-    <p>You can also use the tax calculator in the <a href="https://www.gov.uk/guidance/download-the-hmrc-app" class="govuk-link" target="_blank">HMRC app (opens in a new tab)</a>.</p>
+    <p>You can also use the tax calculator in the <a href="https://www.gov.uk/guidance/download-the-hmrc-app" class="govuk-link">HMRC app</a>.</p>
     
     <p class="govuk-body">There are different ways to:</p>
     <ul class="govuk-list govuk-list--bullet">
-      <li><a href="https://www.gov.uk/check-income-tax-current-year" class="govuk-link" target="_blank">check your Income Tax payments for the current year</a></li>
-      <li><a href="https://www.gov.uk/check-income-tax-last-year" class="govuk-link" target="_blank">check how much you paid last year (6 April 2022 to 5 April 2023)</a></li>
-      <li><a href="https://www.gov.uk/check-income-tax" class="govuk-link" target="_blank">estimate how much you should have paid in a previous year</a></li>
+      <li><a href="https://www.gov.uk/check-income-tax-current-year" class="govuk-link">check your Income Tax payments for the current year</a></li>
+      <li><a href="https://www.gov.uk/check-income-tax-last-year" class="govuk-link">check how much you paid last year (6 April 2022 to 5 April 2023)</a></li>
+      <li><a href="https://www.gov.uk/check-income-tax" class="govuk-link">estimate how much you should have paid in a previous year</a></li>
     </ul>
-    <p class="govuk-body">You can check you've paid the right tax by <a href="https://www.gov.uk/government/organisations/hm-revenue-customs/contact/income-tax-enquiries-for-individuals-pensioners-and-employees" class="govuk-link" target="_blank">contacting HMRC</a> or by <a href="https://www.gov.uk/tax-help" class="govuk-link" target="_blank">getting help from an accountant</a>.</p>
+    <p class="govuk-body">You can check you've paid the right tax by <a href="https://www.gov.uk/government/organisations/hm-revenue-customs/contact/income-tax-enquiries-for-individuals-pensioners-and-employees" class="govuk-link">contacting HMRC</a> or by <a href="https://www.gov.uk/tax-help" class="govuk-link">getting help from an accountant</a>.</p>
     
 
   </div>
