@@ -26,7 +26,7 @@
           text: "%"
         },
         label: {
-          text: "Amount"
+          text: "Percentage amount"
         }
       }) }}
       {% endset -%}
@@ -51,14 +51,13 @@
         value: data['pension-contributions'],
         fieldset: {
           legend: {
-            text: "What are your monthly pension contributions?",
+            text: "How do you want to enter your monthly pension contributions?",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--xl"
           }
         },
         hint: {
-          text: "You can enter this as a percentage of your income or an actual amount in pounds. This might be a workplace pension.
-          "
+          text: "You can enter this as a percentage of your income or an actual amount in pounds. This might be a workplace pension."
         },
         items: [
           {
@@ -80,7 +79,7 @@
           },
           {
             value: "none",
-            text: "None"
+            text: "I do not make pension contributions"
           }
         ]
       }) }}
