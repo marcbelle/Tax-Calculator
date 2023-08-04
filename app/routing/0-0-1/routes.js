@@ -11,8 +11,8 @@ module.exports = function(router) {
   } 
 
   // Calculate taxable income
-  function calculateTaxableIncome(a, b, c, d) {
-    return a - b - c - d;
+  function calculateTaxableIncome(a, b, c) {
+    return a - b - c;
   }
 
   // Calculate takehome
@@ -343,18 +343,97 @@ if the anwser is NOT these look for checkmode and determine if go to end or inco
   })
   router.post('/' + version + '/other-allowances', function(request, response) {
 
+    // reset tax free allowance
+    request.session.data['taxFreeAmount'] = 12570;
+
+    // if user selects anything other than None need to input amount, even if Checkmode is on.
+    // go to specific page for that thing but if 2 are selected go to allowances first
+
+    if (request.session.data['other-allowances'].includes('Allowances')){ 
+      // go to allowances amount
+      response.redirect('/' + version + '/amount-allowances')
+    } else if (request.session.data['other-allowances'].includes('Deductions')) {
+      // no allowances
+      // go to deductions
+      var otherAllowancesTotal = request.session.data['otherAllowancesTotal'];
+      otherAllowancesTotal = 0;
+      request.session.data['otherAllowancesTotal'] = otherAllowancesTotal;
+
+      response.redirect('/' + version + '/amount-deductions')
+    } else {
+      // No allowances or deductions
+      var otherAllowancesTotal = request.session.data['otherAllowancesTotal'];
+      otherAllowancesTotal = 0;
+      var otherDeductionsTotal = request.session.data['otherDeductionsTotal'];
+      otherDeductionsTotal = 0;
+
+
+      request.session.data['otherAllowancesTotal'] = otherAllowancesTotal;
+      request.session.data['otherDeductionsTotal'] = otherDeductionsTotal;
+
+      var checkMode = request.session.data['checkMode'];
+      if (checkMode) {
+        response.redirect('/' + version + '/check-answers')
+      } else {
+        response.redirect('/' + version + '/taxcode')
+      }
+    }
+
+  })
+
+  router.post('/' + version + '/amount-allowances', function(request, response) {
+
+    // reset tax free allowance
+    request.session.data['taxFreeAmount'] = 12570;
+
+    // Calculate allowances
     var otherAllowancesTotal = request.session.data['otherAllowancesTotal'];
 
-    if (request.session.data['other-allowances'] == "monthly"){ 
-      otherAllowancesTotal = request.session.data['other-allowances-monthly'] * 12;
-    } else if (request.session.data['other-allowances'] == "yearly") {
-      otherAllowancesTotal = request.session.data['other-allowances-yearly'];
-    } else {
-      otherAllowancesTotal = 0;
+    if (request.session.data['allowances-frequency'] == "a month"){ 
+      otherAllowancesTotal = request.session.data['allowances-amount'] * 12;
+    } else { 
+      otherAllowancesTotal = request.session.data['allowances-amount'];
     }
 
     request.session.data['otherAllowancesTotal'] = otherAllowancesTotal;
 
+
+    // check if there was a deduction otherwise next screen or check answers
+    if (request.session.data['other-allowances'].includes('Deductions')){ 
+      // go to deductions amount
+      response.redirect('/' + version + '/amount-deductions')
+    } else {
+
+      // No deductions
+      var otherDeductionsTotal = request.session.data['otherDeductionsTotal'];
+      otherDeductionsTotal = 0;
+      request.session.data['otherDeductionsTotal'] = otherDeductionsTotal;
+
+      var checkMode = request.session.data['checkMode'];
+      if (checkMode) {
+        response.redirect('/' + version + '/check-answers')
+      } else {
+        response.redirect('/' + version + '/taxcode')
+      }
+    }
+
+  })
+
+  router.post('/' + version + '/amount-deductions', function(request, response) {
+
+    // reset tax free allowance
+    request.session.data['taxFreeAmount'] = 12570;
+
+    // Calculate deductions
+    var otherDeductionsTotal = request.session.data['otherDeductionsTotal'];
+
+    if (request.session.data['deductions-frequency'] == "a month"){ 
+      otherDeductionsTotal = request.session.data['deductions-amount'] * 12;
+    } else { 
+      otherDeductionsTotal = request.session.data['deductions-amount'];
+    }
+
+    request.session.data['otherDeductionsTotal'] = otherDeductionsTotal;
 
     var checkMode = request.session.data['checkMode'];
     if (checkMode) {
@@ -362,8 +441,10 @@ if the anwser is NOT these look for checkmode and determine if go to end or inco
     } else {
       response.redirect('/' + version + '/taxcode')
     }
-    
+
   })
+
+
 
 
   router.post('/' + version + '/taxcode', function(request, response) {
@@ -391,7 +472,7 @@ if the anwser is NOT these look for checkmode and determine if go to end or inco
     // Grab some default variables stored in the session
     var taxableIncome = request.session.data['taxableIncomeTotal'];
     var yearlySalary = request.session.data['yearlySalary'];
-    var taxFreeAmount = request.session.data['taxFreeAmount'];
+    var taxFreeAmount = 12570;
     var threshold20 = 50270;
     var basicRateTotal = request.session.data['basicRateTotal'];
     var higherRateTotal = request.session.data['higherRateTotal'];
@@ -399,11 +480,18 @@ if the anwser is NOT these look for checkmode and determine if go to end or inco
     var yearlyStudentLoan = request.session.data['yearlyStudentLoan'];
     
 
-    
+    // Work out tax free allowance with allowances and deductions
+
+    taxFreeAmount = taxFreeAmount + (request.session.data['otherAllowancesTotal'] - request.session.data['otherDeductionsTotal'])
+    request.session.data['taxFreeAmount'] = taxFreeAmount;
+    console.log(taxFreeAmount + "tax free amount");
+    console.log(request.session.data['otherAllowancesTotal'] + "allowances");
+    console.log(request.session.data['otherDeductionsTotal'] + "deductions");
+    console.log(request.session.data['otherAllowancesTotal'] - request.session.data['otherDeductionsTotal']);
 
     // Work out taxable income
     //taxableIncome = calculateTaxableIncome(yearlySalary, taxFreeAmount, request.session.data['other-allowances'], request.session.data['yearlyPensionContributions']);
-    taxableIncome = calculateTaxableIncome(yearlySalary, taxFreeAmount, request.session.data['otherAllowancesTotal'], request.session.data['yearlyPensionContributions']);
+    taxableIncome = calculateTaxableIncome(yearlySalary, taxFreeAmount, request.session.data['yearlyPensionContributions']);
     request.session.data['taxableIncomeTotal'] = taxableIncome;
     //console.log(taxableIncome);
     //console.log(yearlySalary);

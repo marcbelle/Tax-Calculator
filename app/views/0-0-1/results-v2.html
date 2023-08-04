@@ -59,14 +59,6 @@
           <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['weeklyPensionContributions'] | round(2) | toFixed(2) | formatPounds }}</td>
         </tr>
         {% endif %}
-        {% if (data['otherAllowancesTotal'] != 0) %}
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell">Other allowances</td>
-          <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['otherAllowancesTotal'] | toFixed(2) | formatPounds }}</td>
-          <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['otherAllowancesTotal_monthly'] | round(2) | toFixed(2) | formatPounds }}</td>
-          <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['otherAllowancesTotal_weekly'] | round(2) | toFixed(2) | formatPounds }}</td>
-        </tr>
-        {% endif %}
         <tr class="govuk-table__row">
           <td class="govuk-table__cell govuk-!-font-weight-bold">Taxable income</td>
           <td class="govuk-table__cell govuk-!-font-weight-bold govuk-table__cell--numeric">£{{ data['taxableIncomeTotal'] | toFixed(2) | formatPounds }}</td>

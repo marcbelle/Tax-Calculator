@@ -8,6 +8,7 @@ module.exports = {
   'taxFreeAmount' : 12570,
   'taxableIncomeTotal' : 0,
   'otherAllowancesTotal' : 0,
+  'otherDeductionsTotal' : 0,
 
   'basicRateTotal' : 0,
   'higherRateTotal' : 0,
@@ -23,6 +24,7 @@ module.exports = {
   'monthlyPensionContributions' : 0,
   'taxableIncomeTotal_monthly' : 0,
   'otherAllowancesTotal_monthly' : 0,
+  'otherDeductionsTotal_monthly' : 0,
 
   'basicRateTotal_monthly' : 0,
   'higherRateTotal_monthly' : 0,
@@ -38,6 +40,7 @@ module.exports = {
   'weeklyPensionContributions' : 0,
   'taxableIncomeTotal_weekly' : 0,
   'otherAllowancesTotal_weekly' : 0,
+  'otherDeductionsTotal_weekly' : 0,
 
   'basicRateTotal_weekly' : 0,
   'higherRateTotal_weekly' : 0,

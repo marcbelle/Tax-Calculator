@@ -12,71 +12,39 @@
 
     <form action="#" method="post">
 
-      {% from "govuk/components/radios/macro.njk" import govukRadios %}
-      {% from "govuk/components/input/macro.njk" import govukInput %}
 
-      {% set monthlyHtml %}
-      {{ govukInput({
-        id: "other-allowances-monthly",
-        name: "other-allowances-monthly",
-        spellcheck: false,
-        classes: "govuk-!-width-one-third",
-        prefix: {
-          text: "£"
-        },
-        label: {
-          text: "Amount, in pounds"
-        }
-      }) }}
-      {% endset -%}
 
-      {% set yearlyHtml %}
-      {{ govukInput({
-        id: "other-allowances-yearly",
-        name: "other-allowances-yearly",
-        classes: "govuk-!-width-one-third",
-        prefix: {
-          text: "£"
-        },
-        label: {
-          text: "Amount, in pounds"
-        }
-      }) }}
-      {% endset -%}
+      {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 
-      {{ govukRadios({
+      {{ govukCheckboxes({
         name: "other-allowances",
+        values: data["other-allowances"],
         fieldset: {
           legend: {
-            text: "Include other allowances or deductions?",
+            text: "Do you have other allowances or deductions?",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--xl"
           }
         },
         hint: {
-          text: "This includes anything that is deducted from your pay before you have to pay tax. For example, employee benefits."
+          text: "Select all that apply. This includes anything that is deducted from your pay before you have to pay tax. For example, employee benefits."
         },
         items: [
           {
-            value: "monthly",
-            text: "Yes, I have a monthly allowance/deduction",
-            conditional: {
-              html: monthlyHtml
-            }
+            value: "Allowances",
+            text: "Allowances"
           },
           {
-            value: "yearly",
-            text: "Yes, I have a yearly allowance/deduction",
-            conditional: {
-              html: yearlyHtml
-            }
+            value: "Deductions",
+            text: "Deductions"
           },
           {
             divider: "or"
           },
           {
-            value: "0",
-            text: "No, I do not have any allowances or deductions"
+            value: "None",
+            text: "No, I do not have other allowances or deductions",
+            behaviour: "exclusive"
           }
         ]
       }) }}
