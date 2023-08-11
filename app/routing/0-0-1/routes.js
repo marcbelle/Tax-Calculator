@@ -345,11 +345,33 @@ if the anwser is NOT these look for checkmode and determine if go to end or inco
 
     // reset tax free allowance
     request.session.data['taxFreeAmount'] = 12570;
+    console.log(request.session.data['other-allowances']);
 
-    // if user selects anything other than None need to input amount, even if Checkmode is on.
-    // go to specific page for that thing but if 2 are selected go to allowances first
+    if (request.session.data['other-allowances'] == undefined) {
 
-    if (request.session.data['other-allowances'].includes('Allowances')){ 
+      // user didn't select anything so set it all as 0
+      
+      // No allowances or deductions
+      var otherAllowancesTotal = request.session.data['otherAllowancesTotal'];
+      otherAllowancesTotal = 0;
+      var otherDeductionsTotal = request.session.data['otherDeductionsTotal'];
+      otherDeductionsTotal = 0;
+
+
+      request.session.data['otherAllowancesTotal'] = otherAllowancesTotal;
+      request.session.data['otherDeductionsTotal'] = otherDeductionsTotal;
+
+      var checkMode = request.session.data['checkMode'];
+      if (checkMode) {
+        response.redirect('/' + version + '/check-answers')
+      } else {
+        response.redirect('/' + version + '/taxcode')
+      }
+
+    } else if (request.session.data['other-allowances'].includes('Allowances')){ 
+      // if user selects anything other than None need to input amount, even if Checkmode is on.
+      // go to specific page for that thing but if 2 are selected go to allowances first
+
       // go to allowances amount
       response.redirect('/' + version + '/amount-allowances')
     } else if (request.session.data['other-allowances'].includes('Deductions')) {
@@ -360,6 +382,7 @@ if the anwser is NOT these look for checkmode and determine if go to end or inco
       request.session.data['otherAllowancesTotal'] = otherAllowancesTotal;
 
       response.redirect('/' + version + '/amount-deductions')
+
     } else {
       // No allowances or deductions
       var otherAllowancesTotal = request.session.data['otherAllowancesTotal'];

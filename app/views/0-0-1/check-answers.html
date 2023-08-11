@@ -140,6 +140,23 @@
               </a>
             </dd>
           </div>
+          {% if (data['other-allowances'] == undefined) %}
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Other allowances and deductions
+            </dt>
+            <dd class="govuk-summary-list__value">
+              <p>None</p>
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="/{{version}}/other-allowances">
+                Change<span class="govuk-visually-hidden"> other allowances and deductions</span>
+              </a>
+            </dd>
+          </div>
+
+          {% else %}
+
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">
               Other allowances and deductions
@@ -155,49 +172,67 @@
               </a>
             </dd>
           </div>
+          {% endif %}
           
-          {% if (data['other-allowances'].includes('Allowances')) %}
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-              Allowances
-            </dt>
-            <dd class="govuk-summary-list__value">
+          
+          {% if (data['other-allowances'] == undefined) %}
 
-              {% if (data['allowances-frequency'] == "a year") %}
-                 £{{ data['allowances-amount'] | formatPounds }} a year
-              {% else %}
-                 £{{ data['allowances-amount'] | formatPounds }} a month
-              {% endif %}
+          {% else %}
 
-            </dd>
-            <dd class="govuk-summary-list__actions">
-              <a class="govuk-link" href="/{{version}}/amount-allowances">
-                Change<span class="govuk-visually-hidden"> allowances amount</span>
-              </a>
-            </dd>
-          </div>
+            {% if (data['other-allowances'].includes('Allowances')) %}
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Allowances
+              </dt>
+              <dd class="govuk-summary-list__value">
+
+                {% if (data['allowances-frequency'] == "a year") %}
+                  £{{ data['allowances-amount'] | formatPounds }} a year
+                {% else %}
+                  £{{ data['allowances-amount'] | formatPounds }} a month
+                {% endif %}
+
+              </dd>
+              <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="/{{version}}/amount-allowances">
+                  Change<span class="govuk-visually-hidden"> allowances amount</span>
+                </a>
+              </dd>
+            </div>
+            {% endif %}
+
           {% endif %}
-          {% if (data['other-allowances'].includes('Deductions')) %}
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key">
-              Deductions
-            </dt>
-            <dd class="govuk-summary-list__value">
 
-              {% if (data['deductions-frequency'] == "a year") %}
-                 £{{ data['deductions-amount'] | formatPounds }} a year
-              {% else %}
-                 £{{ data['deductions-amount'] | formatPounds }} a month
-              {% endif %}
+          
+          {% if (data['other-allowances'] == undefined) %}
 
-            </dd>
-            <dd class="govuk-summary-list__actions">
-              <a class="govuk-link" href="/{{version}}/amount-deductions">
-                Change<span class="govuk-visually-hidden"> deductions amount</span>
-              </a>
-            </dd>
-          </div>
+          {% else %}
+
+            {% if (data['other-allowances'].includes('Deductions')) %}
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key">
+                Deductions
+              </dt>
+              <dd class="govuk-summary-list__value">
+
+                {% if (data['deductions-frequency'] == "a year") %}
+                  £{{ data['deductions-amount'] | formatPounds }} a year
+                {% else %}
+                  £{{ data['deductions-amount'] | formatPounds }} a month
+                {% endif %}
+
+              </dd>
+              <dd class="govuk-summary-list__actions">
+                <a class="govuk-link" href="/{{version}}/amount-deductions">
+                  Change<span class="govuk-visually-hidden"> deductions amount</span>
+                </a>
+              </dd>
+            </div>
+            {% endif %}
+
           {% endif %}
+
+          
 
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">

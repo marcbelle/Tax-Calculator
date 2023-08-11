@@ -18,7 +18,7 @@
         values: data["student-loans"],
         fieldset: {
           legend: {
-            text: "Do you repay a student loan?",
+            text: "Which student loan repayment plan are you on?",
             isPageHeading: true,
             classes: "govuk-fieldset__legend--xl"
           }
@@ -52,21 +52,13 @@
           },
           {
             value: "None",
-            text: "No, I do not repay a student loan",
+            text: "I do not repay a student loan",
             behaviour: "exclusive"
           }
         ]
       }) }}
-    <details class="govuk-details" data-module="govuk-details">
-      <summary class="govuk-details__summary">
-        <span class="govuk-details__summary-text">
-          Check what plan you're on
-        </span>
-      </summary>
-      <div class="govuk-details__text">
-        The amount you repay depends on <a href="https://www.gov.uk/repaying-your-student-loan/which-repayment-plan-you-are-on" class="govuk-link" target="_blank">your repayment plan (opens in a new tab)</a>.
-      </div>
-    </details>
+
+    <p>Find out which <a href="https://www.gov.uk/repaying-your-student-loan/which-repayment-plan-you-are-on" class="govuk-link" target="_blank">repayment plan you're on (opens in  a new tab)</a>.</p>
     {{ govukButton({
       text: "Continue"
     }) }}
