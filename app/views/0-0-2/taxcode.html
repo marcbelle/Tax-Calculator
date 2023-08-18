@@ -1,0 +1,57 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Tax code" %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+  <a class="govuk-back-link" onclick="history.back();" style="cursor:pointer;" >Back</a>
+<main class="govuk-main-wrapper " id="main-content" role="main">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form action="#" method="post">
+
+      {% from "govuk/components/input/macro.njk" import govukInput %}
+
+      {{ govukInput({
+        id: "tax-code",
+        name: "tax-code",
+        label: {
+          text: "What is your tax code? (Optional)",
+          classes: "govuk-label--xl",
+          isPageHeading: true
+        },
+        hint: {
+          text: "If you enter a taxcode it will help us make a more accurate calculation.
+          <br><br>
+          If you have any allowances such as Blind Persons Allowance or owe any tax from a previous year your tax code will help us calculate your income correctly."
+          | safe},
+        value: data['tax-code'],
+        classes: "govuk-input--width-10",
+        spellcheck: false
+      }) }}
+    
+      <details class="govuk-details" data-module="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">
+            I do not know my tax code
+          </span>
+        </summary>
+        <div class="govuk-details__text">
+          You can usually find your tax code on a <a href="https://www.gov.uk/tax-codes/overview" class="govuk-link" target="_blank">recent payslip or P45 (opens in a new tab)</a>. If you do not know it we will use 1257L, unless you earn over £100,000. 1257L is the most common tax code. 
+        </div>
+      </details>
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+
+  </div>
+</div>
+</main>
+</div>
+
+{% endblock %}

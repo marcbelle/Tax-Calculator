@@ -1,0 +1,61 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="State Pension age" %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+  <a class="govuk-back-link" onclick="history.back();" style="cursor:pointer;" >Back</a>
+<main class="govuk-main-wrapper " id="main-content" role="main">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form action="#" method="post">
+
+      {% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+      {{ govukRadios({
+        classes: "govuk-radios--inline",
+        name: "state-pension-age",
+        value: data['state-pension-age'],
+        fieldset: {
+          legend: {
+            text: "Are you over the State Pension age?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--xl"
+          }
+        },
+        items: [
+          {
+            value: "Yes",
+            text: "Yes"
+          },
+          {
+            value: "No",
+            text: "No"
+          }
+        ]
+      }) }}
+      <details class="govuk-details" data-module="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">
+            Why we ask this
+          </span>
+        </summary>
+        <div class="govuk-details__text">
+          You stop paying National Insurance when you reach State Pension age. You can <a href="https://www.gov.uk/tax-national-insurance-after-state-pension-age" class="govuk-link" target="_blank">find out more information (opens in a new tab)</a> or <a href="https://www.gov.uk/state-pension-age" class="govuk-link" target="_blank">check your State Pension age (opens in a new tab)</a> if you are not sure.
+        </div>
+      </details>
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+
+  </div>
+</div>
+</main>
+</div>
+
+{% endblock %}

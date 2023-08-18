@@ -1,0 +1,99 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Pension contributions" %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+  <a class="govuk-back-link" onclick="history.back();" style="cursor:pointer;" >Back</a>
+<main class="govuk-main-wrapper " id="main-content" role="main">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form action="#" method="post">
+
+      {% from "govuk/components/radios/macro.njk" import govukRadios %}
+      {% from "govuk/components/input/macro.njk" import govukInput %}
+
+      {% set percentageHtml %}
+      {{ govukInput({
+        id: "pension-contributions-percentage",
+        value: data['pension-contributions-percentage'],
+        name: "pension-contributions-percentage",
+        spellcheck: false,
+        classes: "govuk-!-width-one-third",
+        suffix: {
+          text: "%"
+        },
+        label: {
+          text: "Percentage amount"
+        }
+      }) }}
+      {% endset -%}
+
+      {% set fixedHtml %}
+      {{ govukInput({
+        id: "pension-contributions-amount",
+        value: data['pension-contributions-amount'],
+        name: "pension-contributions-amount",
+        classes: "govuk-!-width-one-third",
+        prefix: {
+          text: "£"
+        },
+        label: {
+          text: "Amount, in pounds"
+        }
+      }) }}
+      {% endset -%}
+
+      {{ govukRadios({
+        name: "pension-contributions",
+        value: data['pension-contributions'],
+        fieldset: {
+          legend: {
+            text: "How do you want to enter your monthly pension contributions?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--xl"
+          }
+        },
+        hint: {
+          text: "You can enter this as a percentage of your income or an actual amount in pounds. This might be a workplace pension."
+        },
+        items: [
+          {
+            value: "percentage",
+            text: "A percentage of your income",
+            conditional: {
+              html: percentageHtml
+            }
+          },
+          {
+            value: "fixed",
+            text: "An actual amount in pounds",
+            conditional: {
+              html: fixedHtml
+            }
+          },
+          {
+            divider: "or"
+          },
+          {
+            value: "none",
+            text: "I do not make pension contributions"
+          }
+        ]
+      }) }}
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+
+  </div>
+</div>
+</main>
+</div>
+
+{% endblock %}
