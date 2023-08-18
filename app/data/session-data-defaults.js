@@ -12,6 +12,7 @@ module.exports = {
 
   'basicRateTotal' : 0,
   'higherRateTotal' : 0,
+  'additionalRateTotal' : 0,
   'nationalInsuranceTotal' : 0,
 
   'yearlyStudentLoan' : 0,
@@ -28,6 +29,7 @@ module.exports = {
 
   'basicRateTotal_monthly' : 0,
   'higherRateTotal_monthly' : 0,
+  'additionalRateTotal_monthly' : 0,
   'nationalInsuranceTotal_monthly' : 0,
 
   'monthlyStudentLoan' : 0,
@@ -44,6 +46,7 @@ module.exports = {
 
   'basicRateTotal_weekly' : 0,
   'higherRateTotal_weekly' : 0,
+  'additionalRateTotal_weekly' : 0,
   'nationalInsuranceTotal_weekly' : 0,
 
   'weeklyStudentLoan' : 0,

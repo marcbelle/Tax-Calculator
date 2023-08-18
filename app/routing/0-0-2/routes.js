@@ -16,8 +16,8 @@ module.exports = function(router) {
   }
 
   // Calculate takehome
-  function calculateTakehome(a, b, c, d, e, x) {
-    return (a - b - c - d - e) + x ;
+  function calculateTakehome(a, b, c, d, e, f, x) {
+    return (a - b - c - d - e - f) + x ;
   }
 
 
@@ -62,6 +62,11 @@ module.exports = function(router) {
       //Now check if we are going back to check answers or the next page
       var checkMode = request.session.data['checkMode'];
       if (checkMode) {
+
+        // Reset tax free allowance just incase anything changed
+        var taxFreeAmount = 12570;
+        request.session.data['taxFreeAmount'] = taxFreeAmount;
+
 
         // if pension contributions are a percentage
         // recalculate amount if gross amount changed
@@ -248,9 +253,16 @@ if the anwser is NOT these look for checkmode and determine if go to end or inco
       }
 
     } else { // it's job income, check age
-      response.redirect('/' + version + '/state-pension-age')
+      
+      if (checkMode) {
+        response.redirect('/' + version + '/check-answers')
+      } else {
+        response.redirect('/' + version + '/state-pension-age')
+      }
+      
     }
   })
+
   router.post('/' + version + '/state-pension-age', function(request, response) {
 
     var checkMode = request.session.data['checkMode'];
@@ -384,35 +396,50 @@ if the anwser is NOT these look for checkmode and determine if go to end or inco
     // Grab some default variables stored in the session
     var taxableIncome = request.session.data['taxableIncomeTotal'];
     var yearlySalary = request.session.data['yearlySalary'];
-    var taxFreeAmount = 12570;
+    // var taxFreeAmount = 12570;
+    var taxFreeAmount = request.session.data['taxFreeAmount'];
+    var threshold0 = 12570;
     var threshold20 = 50270;
+    var threshold40 = 125140;
     var basicRateTotal = request.session.data['basicRateTotal'];
     var higherRateTotal = request.session.data['higherRateTotal'];
+    var additionalRateTotal = request.session.data['additionalRateTotal'];
     var nationalInsuranceTotal = request.session.data['nationalInsuranceTotal'];
     var yearlyStudentLoan = request.session.data['yearlyStudentLoan'];
     
 
     // Work out tax free allowance with allowances and deductions
+    //taxFreeAmount = taxFreeAmount + (request.session.data['otherAllowancesTotal'] - request.session.data['otherDeductionsTotal'])
+    //request.session.data['taxFreeAmount'] = taxFreeAmount;
 
-    taxFreeAmount = taxFreeAmount + (request.session.data['otherAllowancesTotal'] - request.session.data['otherDeductionsTotal'])
-    request.session.data['taxFreeAmount'] = taxFreeAmount;
-    console.log(taxFreeAmount + "tax free amount");
-    console.log(request.session.data['otherAllowancesTotal'] + "allowances");
-    console.log(request.session.data['otherDeductionsTotal'] + "deductions");
-    console.log(request.session.data['otherAllowancesTotal'] - request.session.data['otherDeductionsTotal']);
 
     // Work out taxable income
-    //taxableIncome = calculateTaxableIncome(yearlySalary, taxFreeAmount, request.session.data['other-allowances'], request.session.data['yearlyPensionContributions']);
+    
+    // Check if the user has a reduced personal allowance before calculating taxable income
+    if (yearlySalary > 100000) {
+      // Reduce the tax free allowance
+      if (yearlySalary > threshold40) {
+        // set allowance to 0
+        taxFreeAmount = 0;
+      } else {
+        // work out how much to reduce it by
+        taxFreeAmount = threshold0 - ((yearlySalary - 100000) / 2)
+      }
+
+    }
+    console.log(taxFreeAmount);
+
     taxableIncome = calculateTaxableIncome(yearlySalary, taxFreeAmount, request.session.data['yearlyPensionContributions']);
     request.session.data['taxableIncomeTotal'] = taxableIncome;
+    request.session.data['taxFreeAmount'] = taxFreeAmount;
     //console.log(taxableIncome);
     //console.log(yearlySalary);
-    console.log(request.session.data['otherAllowancesTotal']);
+    //console.log(request.session.data['otherAllowancesTotal']);
     //console.log(request.session.data['yearlyPensionContributions']);
 
 
-    // Work out tax bands if above tax free amount
-    if (yearlySalary > taxFreeAmount) {
+    // Work out tax bands if above tax free threshold
+    if (yearlySalary > threshold0) {
     console.log("gotta pay some tax");
 
             // Determine rate and NI contributions
@@ -444,16 +471,57 @@ if the anwser is NOT these look for checkmode and determine if go to end or inco
               request.session.data['nationalInsuranceTotal'] = nationalInsuranceTotal;
 
 
+            } else if (yearlySalary > threshold40) { // User is on 45%
+
+              console.log("45%");
+
+              
+
+              var basicRateTotal = (threshold20 - threshold0) * 0.2; // work out how much to do at 20%
+              var higherRateTotal = (threshold40 - (threshold20 - threshold0)) * 0.4; // work out how much is at 40%
+              var additionalRateTotal = (yearlySalary - threshold40) * 0.45; // do whatever is left at 45%
+
+              if (request.session.data['income-type'] == 'job') {
+                // check age
+                if (request.session.data['state-pension-age'] == 'No') {
+                  // User pays NI
+                  var NI20 = (threshold20 - threshold0) * 0.12;
+                  var NI40 = (yearlySalary - threshold20) * 0.02;
+                  nationalInsuranceTotal = NI20 + NI40;
+                  console.log('Pay the NI!');
+                } else {
+                  // No NI because of State Pension age
+                  nationalInsuranceTotal = 0;
+                  console.log('pension age');
+                }
+              } else {
+                // no NI because it is a private pension
+                nationalInsuranceTotal = 0;
+                console.log('private pension');
+              }
+
+              console.log(basicRateTotal);
+              console.log(higherRateTotal);
+              console.log(additionalRateTotal);
+              console.log(nationalInsuranceTotal);
+              request.session.data['basicRateTotal'] = basicRateTotal;
+              request.session.data['higherRateTotal'] = higherRateTotal;
+              request.session.data['additionalRateTotal'] = additionalRateTotal;
+              request.session.data['nationalInsuranceTotal'] = nationalInsuranceTotal;
+              
+              
+
             } else { // User is on 40%
+
               console.log("40 %");
-              var basicRateTotal = (threshold20 - taxFreeAmount) * 0.2; // work out how much to do at 20%
+              var basicRateTotal = (threshold20 - threshold0) * 0.2; // work out how much to do at 20%
               var higherRateTotal = (yearlySalary - threshold20) * 0.4; // do whatever is left at 40%
 
               if (request.session.data['income-type'] == 'job') {
                 // check age
                 if (request.session.data['state-pension-age'] == 'No') {
                   // User pays NI
-                  var NI20 = (threshold20 - taxFreeAmount) * 0.12;
+                  var NI20 = (threshold20 - threshold0) * 0.12;
                   var NI40 = (yearlySalary - threshold20) * 0.02;
                   nationalInsuranceTotal = NI20 + NI40;
                   console.log('Pay the NI!');
@@ -482,7 +550,7 @@ if the anwser is NOT these look for checkmode and determine if go to end or inco
 
 
     // Work out take-home pay
-    takeHomePay = calculateTakehome(taxableIncome, basicRateTotal, higherRateTotal, nationalInsuranceTotal, yearlyStudentLoan, taxFreeAmount) ;
+    takeHomePay = calculateTakehome(taxableIncome, basicRateTotal, higherRateTotal, additionalRateTotal, nationalInsuranceTotal, yearlyStudentLoan, taxFreeAmount) ;
     request.session.data['takeHomePay'] = takeHomePay;
     console.log(takeHomePay);
 
@@ -495,6 +563,7 @@ if the anwser is NOT these look for checkmode and determine if go to end or inco
     request.session.data['otherAllowancesTotal_monthly'] = request.session.data['otherAllowancesTotal']  / 12;
     request.session.data['basicRateTotal_monthly'] = request.session.data['basicRateTotal'] / 12;
     request.session.data['higherRateTotal_monthly'] = request.session.data['higherRateTotal'] / 12;
+    request.session.data['additionalRateTotal_monthly'] = request.session.data['additionalRateTotal'] / 12;
     request.session.data['nationalInsuranceTotal_monthly'] = request.session.data['nationalInsuranceTotal'] / 12;
     request.session.data['monthlyStudentLoan'] = request.session.data['yearlyStudentLoan'] / 12;
     request.session.data['takeHomePay_monthly'] = request.session.data['takeHomePay'] / 12;
@@ -506,6 +575,7 @@ if the anwser is NOT these look for checkmode and determine if go to end or inco
     request.session.data['otherAllowancesTotal_weekly'] = request.session.data['otherAllowancesTotal']  / 52;
     request.session.data['basicRateTotal_weekly'] = request.session.data['basicRateTotal'] / 52;
     request.session.data['higherRateTotal_weekly'] = request.session.data['higherRateTotal'] / 52;
+    request.session.data['additionalRateTotal_weekly'] = request.session.data['additionalRateTotal'] / 52;
     request.session.data['nationalInsuranceTotal_weekly'] = request.session.data['nationalInsuranceTotal'] / 52;
     request.session.data['weeklyStudentLoan'] = request.session.data['yearlyStudentLoan'] / 52;
     request.session.data['takeHomePay_weekly'] = request.session.data['takeHomePay'] / 52;
