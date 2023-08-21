@@ -15,11 +15,6 @@ module.exports = function(router) {
     return a - b - c;
   }
 
-  // Calculate taxable income before tax free amount is appled
-  function calculateTaxableBeforeTaxfree(a, b) {
-    return a - b;
-  }
-
   // Calculate takehome
   function calculateTakehome(a, b, c, d, e, f, x) {
     return (a - b - c - d - e - f) + x ;
@@ -421,18 +416,14 @@ if the anwser is NOT these look for checkmode and determine if go to end or inco
     // Work out taxable income
     
     // Check if the user has a reduced personal allowance before calculating taxable income
-
-    var TaxableBeforeTaxfree = calculateTaxableBeforeTaxfree(yearlySalary, request.session.data['yearlyPensionContributions']);
-
-
-    if (TaxableBeforeTaxfree > 100000) {
+    if (yearlySalary > 100000) {
       // Reduce the tax free allowance
-      if (TaxableBeforeTaxfree > threshold40) {
+      if (yearlySalary > threshold40) {
         // set allowance to 0
         taxFreeAmount = 0;
       } else {
         // work out how much to reduce it by
-        taxFreeAmount = threshold0 - ((TaxableBeforeTaxfree - 100000) / 2)
+        taxFreeAmount = threshold0 - ((yearlySalary - 100000) / 2)
       }
 
     }
@@ -454,13 +445,13 @@ if the anwser is NOT these look for checkmode and determine if go to end or inco
             // Determine rate and NI contributions
             if (yearlySalary <= threshold20 ) { // User is only on 20%
               console.log("20 %");
-              basicRateTotal = (yearlySalary - threshold0) * 0.2;
+              basicRateTotal = taxableIncome * 0.2;
               
               if (request.session.data['income-type'] == 'job') {
                 // check age
                 if (request.session.data['state-pension-age'] == 'No') {
                   // User pays NI
-                  nationalInsuranceTotal = (yearlySalary - threshold0) * 0.12;
+                  nationalInsuranceTotal = taxableIncome * 0.12;
                   console.log('Pay the NI!');
                 } else {
                   // No NI because of State Pension age
@@ -480,13 +471,14 @@ if the anwser is NOT these look for checkmode and determine if go to end or inco
               request.session.data['nationalInsuranceTotal'] = nationalInsuranceTotal;
 
 
-            } else if (taxableIncome > threshold40) { // User is on 45%
+            } else if (yearlySalary > threshold40) { // User is on 45%
 
               console.log("45%");
 
               
+
               var basicRateTotal = (threshold20 - threshold0) * 0.2; // work out how much to do at 20%
-              var higherRateTotal = (threshold40 - threshold20) * 0.4; // work out how much is at 40%
+              var higherRateTotal = (threshold40 - (threshold20 - threshold0)) * 0.4; // work out how much is at 40%
               var additionalRateTotal = (yearlySalary - threshold40) * 0.45; // do whatever is left at 45%
 
               if (request.session.data['income-type'] == 'job') {
