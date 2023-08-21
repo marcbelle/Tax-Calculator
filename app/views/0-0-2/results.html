@@ -9,7 +9,6 @@
 
 <div class="govuk-width-container">
   <a class="govuk-back-link" onclick="history.back();" style="cursor:pointer;" >Back</a>
-  <br><a class="" href="/{{version}}/results-v2" >View version 2
   </a>
 <main class="govuk-main-wrapper " id="main-content" role="main">
   <div class="govuk-grid-row">
@@ -268,7 +267,13 @@
 
       
       {% if (data['tax-code'] == "") %}
-        <li>Your tax-free allowance is £12,570 (because you did not provide a tax code)</li>
+        {% if (data['taxableIncomeTotal'] <= 100000) %}
+          <li>Your tax-free allowance is £12,570 (because you did not provide a tax code)</li>
+        {% else %}
+          <li>Because your salary is over £100,000 you will start to lose your personal allowance.</li>
+        {% endif %}
+
+        
       {% endif %}
 
 

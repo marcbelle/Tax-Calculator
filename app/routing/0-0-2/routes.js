@@ -288,6 +288,7 @@ if the anwser is NOT these look for checkmode and determine if go to end or inco
       var yearlyPensionContributions = request.session.data['yearlyPensionContributions'];
       yearlyPensionContributions = 0;
       request.session.data['yearlyPensionContributions'] = yearlyPensionContributions;
+    
 
       
       var checkMode = request.session.data['checkMode'];
@@ -401,6 +402,7 @@ if the anwser is NOT these look for checkmode and determine if go to end or inco
     var threshold0 = 12570;
     var threshold20 = 50270;
     var threshold40 = 125140;
+    var netSalary = 0;
     var basicRateTotal = request.session.data['basicRateTotal'];
     var higherRateTotal = request.session.data['higherRateTotal'];
     var additionalRateTotal = request.session.data['additionalRateTotal'];
@@ -413,37 +415,53 @@ if the anwser is NOT these look for checkmode and determine if go to end or inco
     //request.session.data['taxFreeAmount'] = taxFreeAmount;
 
 
-    // Work out taxable income
-    
-    // Check if the user has a reduced personal allowance before calculating taxable income
+   
     if (yearlySalary > 100000) {
-      // Reduce the tax free allowance
-      if (yearlySalary > threshold40) {
-        // set allowance to 0
-        taxFreeAmount = 0;
-      } else {
-        // work out how much to reduce it by
-        taxFreeAmount = threshold0 - ((yearlySalary - 100000) / 2)
-      }
+      // work out what tax free amoutn will be
 
-    }
-    console.log(taxFreeAmount);
+      netSalary = calculateTaxableIncome(yearlySalary, 0, request.session.data['yearlyPensionContributions']);
+
+      
+
+      if (netSalary > 100000) {
+
+        // Reduce the tax free allowance
+        if (netSalary > threshold40) {
+          // set allowance to 0
+          taxFreeAmount = 0;
+        } else {
+        // work out how much to reduce it by
+          taxFreeAmount = threshold0 - ((netSalary - 100000) / 2)
+        }
+
+  
+      } 
+
+    } 
+
+
+
 
     taxableIncome = calculateTaxableIncome(yearlySalary, taxFreeAmount, request.session.data['yearlyPensionContributions']);
+   
+    
+
+
+
     request.session.data['taxableIncomeTotal'] = taxableIncome;
     request.session.data['taxFreeAmount'] = taxFreeAmount;
-    //console.log(taxableIncome);
+    //console.log(taxableIncome + "is the taxable income");
     //console.log(yearlySalary);
     //console.log(request.session.data['otherAllowancesTotal']);
     //console.log(request.session.data['yearlyPensionContributions']);
 
 
     // Work out tax bands if above tax free threshold
-    if (yearlySalary > threshold0) {
+    if (taxableIncome > threshold0) {
     console.log("gotta pay some tax");
 
             // Determine rate and NI contributions
-            if (yearlySalary <= threshold20 ) { // User is only on 20%
+            if (taxableIncome <= threshold20 ) { // User is only on 20%
               console.log("20 %");
               basicRateTotal = taxableIncome * 0.2;
               
@@ -471,7 +489,7 @@ if the anwser is NOT these look for checkmode and determine if go to end or inco
               request.session.data['nationalInsuranceTotal'] = nationalInsuranceTotal;
 
 
-            } else if (yearlySalary > threshold40) { // User is on 45%
+            } else if (taxableIncome > threshold40) { // User is on 45%
 
               console.log("45%");
 
@@ -479,7 +497,7 @@ if the anwser is NOT these look for checkmode and determine if go to end or inco
 
               var basicRateTotal = (threshold20 - threshold0) * 0.2; // work out how much to do at 20%
               var higherRateTotal = (threshold40 - (threshold20 - threshold0)) * 0.4; // work out how much is at 40%
-              var additionalRateTotal = (yearlySalary - threshold40) * 0.45; // do whatever is left at 45%
+              var additionalRateTotal = (taxableIncome - threshold40) * 0.45; // do whatever is left at 45%
 
               if (request.session.data['income-type'] == 'job') {
                 // check age
@@ -515,7 +533,18 @@ if the anwser is NOT these look for checkmode and determine if go to end or inco
 
               console.log("40 %");
               var basicRateTotal = (threshold20 - threshold0) * 0.2; // work out how much to do at 20%
-              var higherRateTotal = (yearlySalary - threshold20) * 0.4; // do whatever is left at 40%
+              var higherRateTotal = (taxableIncome - (threshold20 - threshold0)) * 0.4; // do whatever is left at 40%
+              console.log("higher rate is: " + higherRateTotal)
+/*
+              if (netSalary > 100000) {
+
+                // if over £100k calculate additional 40% on threshold0 - taxfreeamount.
+                higherRateTotal = higherRateTotal + ((threshold0 - taxFreeAmount) * 0.4);
+
+              }
+              */
+
+              
 
               if (request.session.data['income-type'] == 'job') {
                 // check age

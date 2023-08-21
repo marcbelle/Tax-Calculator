@@ -95,13 +95,20 @@
             </dt>
             <dd class="govuk-summary-list__value">
 
-              {% if (data['pension-contributions'] == "percentage")  %}
-                {{ data['pension-contributions-amount'] }}% a month
-              {% elseif (data['pension-contributions'] == "fixed") %}
-                £{{ data['pension-contributions-amount'] | formatPounds }} a month
+              {% if (data['make-pension-contributions'] == "Yes")  %}
+              
+                {% if (data['pension-contributions'] == "percentage")  %}
+                  {{ data['pension-contributions-amount'] }}% a month
+                {% elseif (data['pension-contributions'] == "fixed") %}
+                  £{{ data['pension-contributions-amount'] | formatPounds }} a month
+                {% else %}
+                  None
+                {% endif %}
+
               {% else %}
                 None
               {% endif %}
+
 
             </dd>
             <dd class="govuk-summary-list__actions">
