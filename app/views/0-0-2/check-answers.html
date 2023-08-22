@@ -141,10 +141,40 @@
               Tax code
             </dt>
             <dd class="govuk-summary-list__value">
+
+
+
+
               {% if (data['tax-code'] == "") %}
-              Not provided
+                Not provided
               {% else %}
-              {{ data['tax-code'] }}
+
+                <p>{{ data['tax-code'] }}</p>
+
+                {% if (data['tax-code'] == "1257L") %}
+
+                  {% if (data['yearlySalary'] > 100000) %}
+                    {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+
+                    {{ govukWarningText({
+                      text: "You are using the default taxcode for those on income under £100,000. You should check this is correct before continuing.",
+                      iconFallbackText: "Warning"
+                    }) }}
+                  {% endif %}
+
+                {% else %}
+
+                  {% if (data['changeSalary'] == true) %}
+                    {% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+
+                    {{ govukWarningText({
+                      text: "This taxcode might not apply to this salary. If this is what is on your payslip you can leave it.",
+                      iconFallbackText: "Warning"
+                    }) }}
+                  {% endif %}
+
+                {% endif %}
+
               {% endif %}
             </dd>
             <dd class="govuk-summary-list__actions">

@@ -2,6 +2,7 @@ module.exports = {
 
   // Insert values here
   'checkMode' : false, // determines if we are in Check Answers mode
+  'changeSalary' : false, // determines if we changed the salary
 
   'yearlySalary' : 0,
   'yearlyPensionContributions' : 0,

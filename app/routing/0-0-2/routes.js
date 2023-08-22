@@ -101,6 +101,10 @@ module.exports = function(router) {
         }
 
         request.session.data['yearlyStudentLoan'] = yearlyStudentLoan;
+
+        // flag that we have updated the amount
+        //request.session.data['changeSalary'] = true;
+        request.session.data['changeSalary'] = true;
         response.redirect('/' + version + '/check-answers')
 
       } else {
@@ -380,6 +384,13 @@ if the anwser is NOT these look for checkmode and determine if go to end or inco
       
     } else { // there is a tax code skip to check answers
       request.session.data['checkMode'] = true;
+
+      // User might have updated the taxcode so hide the message about taxcode not applying to salary
+      var changeSalary = request.session.data['changeSalary'];
+      if (changeSalary) {
+        request.session.data['changeSalary'] = false;
+      }
+
       response.redirect('/' + version + '/check-answers')
     }
 
