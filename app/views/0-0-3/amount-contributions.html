@@ -1,0 +1,71 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Allowances amount" %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+  <a class="govuk-back-link" onclick="history.back();" style="cursor:pointer;" >Back</a>
+<main class="govuk-main-wrapper " id="main-content" role="main">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-xl">
+      What are your monthly pension contributions?
+    </h1>
+    <form action="#" method="post">
+
+      {% from "govuk/components/input/macro.njk" import govukInput %}
+
+      {{ govukInput({
+        id: "pension-contributions-amount",
+        name: "pension-contributions-amount",
+        label: {
+          text: "Amount",
+          classes: "govuk-label--m",
+          isPageHeading: false
+        },
+        hint: {
+          text: "You can enter this as an amount or as a percentage of your salary."
+        },
+        value: data['pension-contributions-amount'],
+        classes: "govuk-input--width-10",
+        spellcheck: false
+      }) }}
+
+      {% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+      {{ govukRadios({
+        name: "pension-contributions",
+        value: data['pension-contributions'],
+        fieldset: {
+          legend: {
+            text: "Is this an amount in pounds or a percentage?",
+            isPageHeading: false,
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        items: [
+          {
+            value: "fixed",
+            text: "An amount in pounds"
+          },
+          {
+            value: "percentage",
+            text: "Percentage"
+          }
+        ]
+      }) }}
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+
+  </div>
+</div>
+</main>
+</div>
+
+{% endblock %}

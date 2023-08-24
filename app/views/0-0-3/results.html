@@ -2,7 +2,7 @@
 
 {% set pageName="Home" %}
 
-{% set version="0-0-2" %}
+{% set version="0-0-3" %}
 
 
 {% block content %}
@@ -297,11 +297,23 @@
 
     <p class="govuk-body"></p>
 
-    <form action="/manage-prototype/clear-data" method="post">
+
+    {% from "govuk/components/button/macro.njk" import govukButton %}
+
+    <div class="govuk-button-group">
+      <form action="/manage-prototype/clear-data" method="post">
       {{ govukButton({
         text: "Start again"
       }) }}
-  </form>
+    </form>
+    <form action="#" method="post">
+      {{ govukButton({
+        text: "Update answers",
+        classes: "govuk-button--secondary"
+      }) }}
+    </form>
+    </div>
+
 
   </div>
 
