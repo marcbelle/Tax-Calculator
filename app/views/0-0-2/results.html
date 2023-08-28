@@ -270,7 +270,7 @@
         {% if (data['taxableIncomeTotal'] <= 100000) %}
           <li>Your tax-free allowance is £12,570 (because you did not provide a tax code)</li>
         {% else %}
-          <li>Because your salary is over £100,000 you will start to lose your personal allowance.</li>
+          <li>Your tax-free allowance is reduced because your yearly income is over £100,000.</li>
         {% endif %}
 
         
@@ -297,11 +297,21 @@
 
     <p class="govuk-body"></p>
 
-    <form action="/manage-prototype/clear-data" method="post">
+    {% from "govuk/components/button/macro.njk" import govukButton %}
+
+    <div class="govuk-button-group">
+      <form action="/manage-prototype/clear-data" method="post">
       {{ govukButton({
         text: "Start again"
       }) }}
-  </form>
+    </form>
+    <form action="#" method="post">
+      {{ govukButton({
+        text: "Back to check answers",
+        classes: "govuk-button--secondary"
+      }) }}
+    </form>
+    </div>
 
   </div>
 

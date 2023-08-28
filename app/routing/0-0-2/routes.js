@@ -624,6 +624,12 @@ if the anwser is NOT these look for checkmode and determine if go to end or inco
 
     response.redirect('/' + version + '/results')
   })
+
+  router.post('/' + version + '/results', function(request, response) {
+
+    response.redirect('/' + version + '/check-answers')
+    
+  })
   
 
   //------- Code goes above here -------
