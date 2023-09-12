@@ -277,7 +277,7 @@
 
       
       {% if (data['tax-code'] == "" or data['tax-code'] == undefined) %}
-        {% if (data['taxableIncomeTotal'] <= 100000) %}
+        {% if (data['taperMode'] == false) %}
           <li>Your tax-free allowance is £12,570 (because you did not provide a tax code)</li>
         {% else %}
           <li>Your tax-free allowance is reduced because your yearly income is over £100,000.</li>

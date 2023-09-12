@@ -422,6 +422,9 @@ if the anwser is NOT these look for checkmode and determine if go to end or inco
     request.session.data['additionalRateTotal'] = additionalRateTotal;
     var nationalInsuranceTotal = request.session.data['nationalInsuranceTotal'];
     var yearlyStudentLoan = request.session.data['yearlyStudentLoan'];
+
+    // Reset taper flag
+    request.session.data['taperMode'] = false;
     
 
     // Work out tax free allowance with allowances and deductions
@@ -436,6 +439,7 @@ if the anwser is NOT these look for checkmode and determine if go to end or inco
       netSalary = calculateTaxableIncome(yearlySalary, 0, request.session.data['yearlyPensionContributions']);
 
       
+      
 
       if (netSalary > 100000) {
 
@@ -449,6 +453,9 @@ if the anwser is NOT these look for checkmode and determine if go to end or inco
 
         } else {
           // Taper
+          //Set taper flag to on
+          request.session.data['taperMode'] = true;
+          
           // Reduce the tax free allowance
           if (netSalary > threshold40) {
             // set allowance to 0
@@ -461,7 +468,7 @@ if the anwser is NOT these look for checkmode and determine if go to end or inco
   
       } 
 
-    } 
+    }
 
 
 

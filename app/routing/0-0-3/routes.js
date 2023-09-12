@@ -625,6 +625,9 @@ if the anwser is NOT these look for checkmode and determine if go to end or inco
     var nationalInsuranceTotal = request.session.data['nationalInsuranceTotal'];
     var yearlyStudentLoan = request.session.data['yearlyStudentLoan'];
 
+    // Reset taper flag
+    request.session.data['taperMode'] = false;
+
 
     // Work out tax free allowance with allowances and deductions
     //taxFreeAmount = taxFreeAmount + (request.session.data['otherAllowancesTotal'] - request.session.data['otherDeductionsTotal'])
@@ -653,6 +656,9 @@ if the anwser is NOT these look for checkmode and determine if go to end or inco
           //console.log (request.session.data['tax-code'] + "tax code doesn't apply");
         } else {
           // Taper
+          //Set taper flag to on
+          request.session.data['taperMode'] = true;
+          
           // Reduce the tax free allowance
           if (netSalary > (threshold40 + (request.session.data['otherAllowancesTotal'] - request.session.data['otherDeductionsTotal']) )) {
             // set allowance to 0

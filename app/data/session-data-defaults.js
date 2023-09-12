@@ -3,6 +3,7 @@ module.exports = {
   // Insert values here
   'checkMode' : false, // determines if we are in Check Answers mode
   'changeSalary' : false, // determines if we changed the salary
+  'taperMode' : false, // determines if we have tapered
 
   // Fixed tax thresholds
   'defaultTaxFreeAmount' : 12570,
