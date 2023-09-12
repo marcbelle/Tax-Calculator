@@ -256,6 +256,16 @@
 
 
 
+    {% if (data['tax-code'] == "1257L") and (data['taxableIncomeTotal'] > 100000) %}
+      <div class="govuk-warning-text">
+        <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+        <strong class="govuk-warning-text__text">
+          <span class="govuk-warning-text__assistive">Warning</span>
+          You used a tax code for those with an income £100,000 or less. If your income was over £100,000 you would be given a different tax code to reflect a <a href="https://www.gov.uk/income-tax-rates/income-over-100000" class="govuk-link" target="_blank">reduced personal allowance (opens in a new tab)</a>.
+        </strong>
+      </div>
+    {% endif %}
+
     <h2 class="govuk-heading-m">Our assumptions</h2>
     <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
 
@@ -266,14 +276,12 @@
       {% endif %}
 
       
-      {% if (data['tax-code'] == "") %}
+      {% if (data['tax-code'] == "" or data['tax-code'] == undefined) %}
         {% if (data['taxableIncomeTotal'] <= 100000) %}
           <li>Your tax-free allowance is £12,570 (because you did not provide a tax code)</li>
         {% else %}
           <li>Your tax-free allowance is reduced because your yearly income is over £100,000.</li>
         {% endif %}
-
-        
       {% endif %}
 
 

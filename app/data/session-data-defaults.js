@@ -4,6 +4,13 @@ module.exports = {
   'checkMode' : false, // determines if we are in Check Answers mode
   'changeSalary' : false, // determines if we changed the salary
 
+  // Fixed tax thresholds
+  'defaultTaxFreeAmount' : 12570,
+  'threshold0' : 12570,
+  'threshold20' : 50270,
+  'threshold40' : 125140,
+
+
   'yearlySalary' : 0,
   'yearlyPensionContributions' : 0,
   'taxFreeAmount' : 12570,

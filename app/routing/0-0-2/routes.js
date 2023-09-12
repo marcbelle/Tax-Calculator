@@ -408,15 +408,18 @@ if the anwser is NOT these look for checkmode and determine if go to end or inco
     // Grab some default variables stored in the session
     var taxableIncome = request.session.data['taxableIncomeTotal'];
     var yearlySalary = request.session.data['yearlySalary'];
-    // var taxFreeAmount = 12570;
-    var taxFreeAmount = request.session.data['taxFreeAmount'];
-    var threshold0 = 12570;
-    var threshold20 = 50270;
-    var threshold40 = 125140;
+    var taxFreeAmount = request.session.data['defaultTaxFreeAmount']; // we reset the taxfree amount so that we can calculate it again incase the user has made a change.
+    // var taxFreeAmount = request.session.data['taxFreeAmount'];
+    var threshold0 = request.session.data['threshold0'];
+    var threshold20 = request.session.data['threshold20'];
+    var threshold40 = request.session.data['threshold40'];
     var netSalary = 0;
-    var basicRateTotal = request.session.data['basicRateTotal'];
-    var higherRateTotal = request.session.data['higherRateTotal'];
-    var additionalRateTotal = request.session.data['additionalRateTotal'];
+    var basicRateTotal = 0; // reset in case the user makes a change to salary
+    var higherRateTotal = 0; // reset in case the user makes a change to salary
+    var additionalRateTotal = 0; // reset in case the user makes a change to salary
+    request.session.data['basicRateTotal'] = basicRateTotal;
+    request.session.data['higherRateTotal'] = higherRateTotal;
+    request.session.data['additionalRateTotal'] = additionalRateTotal;
     var nationalInsuranceTotal = request.session.data['nationalInsuranceTotal'];
     var yearlyStudentLoan = request.session.data['yearlyStudentLoan'];
     
@@ -436,15 +439,25 @@ if the anwser is NOT these look for checkmode and determine if go to end or inco
 
       if (netSalary > 100000) {
 
-        // Reduce the tax free allowance
-        if (netSalary > threshold40) {
-          // set allowance to 0
-          taxFreeAmount = 0;
-        } else {
-        // work out how much to reduce it by
-          taxFreeAmount = threshold0 - ((netSalary - 100000) / 2)
-        }
+        // Tapering should apply but if the user has ignored the first taxcode message on check answers
+        // let them continue with the 1257L taxcode without tapering the tax free amount and show them 
+        // a second message on the results screen.
 
+        if (request.session.data['tax-code'] == "1257L") {
+
+          taxFreeAmount = taxFreeAmount;
+
+        } else {
+          // Taper
+          // Reduce the tax free allowance
+          if (netSalary > threshold40) {
+            // set allowance to 0
+            taxFreeAmount = 0;
+          } else {
+          // work out how much to reduce it by
+            taxFreeAmount = threshold0 - ((netSalary - 100000) / 2)
+          }
+        }
   
       } 
 
