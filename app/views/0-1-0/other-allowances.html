@@ -1,0 +1,63 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Other allowances" %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+  <a class="govuk-back-link" onclick="history.back();" style="cursor:pointer;" >Back</a>
+<main class="govuk-main-wrapper " id="main-content" role="main">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form action="#" method="post">
+
+
+
+      {% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+
+      {{ govukCheckboxes({
+        name: "other-allowances",
+        values: data["other-allowances"],
+        fieldset: {
+          legend: {
+            text: "Do you have other allowances or deductions?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--xl"
+          }
+        },
+        hint: {
+          text: "Select all that apply. This includes anything that is deducted from your pay before you have to pay tax. For example, employee benefits."
+        },
+        items: [
+          {
+            value: "Allowances",
+            text: "Allowances"
+          },
+          {
+            value: "Deductions",
+            text: "Deductions"
+          },
+          {
+            divider: "or"
+          },
+          {
+            value: "None",
+            text: "No, I do not have other allowances or deductions",
+            behaviour: "exclusive"
+          }
+        ]
+      }) }}
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+
+  </div>
+</div>
+</main>
+</div>
+
+{% endblock %}

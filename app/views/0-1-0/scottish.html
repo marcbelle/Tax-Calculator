@@ -1,0 +1,61 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Scottish Income Tax Rate" %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+  <a class="govuk-back-link" onclick="history.back();" style="cursor:pointer;" >Back</a>
+<main class="govuk-main-wrapper " id="main-content" role="main">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form action="#" method="post">
+
+      {% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+      {{ govukRadios({
+        classes: "govuk-radios--inline",
+        name: "scottish-rate",
+        value: data['scottish-rate'],
+        fieldset: {
+          legend: {
+            text: "Do you pay the Scottish Income Tax rate?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--xl"
+          }
+        },
+        items: [
+          {
+            value: "Yes",
+            text: "Yes"
+          },
+          {
+            value: "No",
+            text: "No"
+          }
+        ]
+      }) }}
+      <details class="govuk-details" data-module="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">
+            Check if you pay Scottish Income Tax
+          </span>
+        </summary>
+        <div class="govuk-details__text">
+          You usually pay Scottish Income Tax if you live in Scotland for more than half the tax year. It does not matter where you work. You can check if you pay <a href="https://www.gov.uk/scottish-income-tax" class="govuk-link" target="_blank">Scottish Income Tax (opens in a new tab)</a> if you're not sure.
+        </div>
+      </details>
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+
+  </div>
+</div>
+</main>
+</div>
+
+{% endblock %}
