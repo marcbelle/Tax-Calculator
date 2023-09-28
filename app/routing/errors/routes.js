@@ -111,18 +111,9 @@ module.exports = function(router) {
 
         request.session.data['yearlyStudentLoan'] = yearlyStudentLoan;
 
-        // When a user has put a specific taxcode in and had a salary over £100K set a flag
-        // so alert that you might need to check the tax code. The flag is not removed until
-        // the user goes to the tax code screen.
-
-        // This only happens if at some point the user had an income of £100K and changed it.
-        // It doesn't happen for changes under £100K.
-
-        if (yearlySalary > 100000) {
-          request.session.data['changeSalary'] = true;
-        }
-        
-        
+        // flag that we have updated the amount
+        //request.session.data['changeSalary'] = true;
+        request.session.data['changeSalary'] = true;
         response.redirect('/' + version + '/check-answers')
 
       } else {
@@ -195,20 +186,7 @@ if the anwser is NOT these look for checkmode and determine if go to end or inco
         yearlyStudentLoan = 0;
       }
 
-      
       request.session.data['yearlyStudentLoan'] = yearlyStudentLoan;
-
-      // When a user has put a specific taxcode in and had a salary over £100K set a flag
-        // so alert that you might need to check the tax code. The flag is not removed until
-        // the user goes to the tax code screen.
-
-        // This only happens if at some point the user had an income of £100K and changed it.
-        // It doesn't happen for changes under £100K.
-
-      if (yearlySalary > 100000) {
-        request.session.data['changeSalary'] = true;
-      }
-
       response.redirect('/' + version + '/check-answers')
       
     } else {
@@ -263,18 +241,6 @@ if the anwser is NOT these look for checkmode and determine if go to end or inco
       }
 
       request.session.data['yearlyStudentLoan'] = yearlyStudentLoan;
-
-      // When a user has put a specific taxcode in and had a salary over £100K set a flag
-        // so alert that you might need to check the tax code. The flag is not removed until
-        // the user goes to the tax code screen.
-
-        // This only happens if at some point the user had an income of £100K and changed it.
-        // It doesn't happen for changes under £100K.
-
-      if (yearlySalary > 100000) {
-        request.session.data['changeSalary'] = true;
-      }
-
       response.redirect('/' + version + '/check-answers')
       
     } else {
@@ -435,62 +401,11 @@ if the anwser is NOT these look for checkmode and determine if go to end or inco
       }
     }
   })
-  
 
 
 
   router.post('/' + version + '/amount-contributions', function(request, response) {
 
-    // Calculate a yearly pension contributions
-    var yearlyPensionContributions = request.session.data['yearlyPensionContributions'];
-
-    if (request.session.data['pension-contributions'] == "fixed"){ 
-      yearlyPensionContributions = request.session.data['pension-contributions-amount'] * 12
-    } else {
-      yearlyPensionContributions = (request.session.data['pension-contributions-amount'] / 100) * request.session.data['yearlySalary']
-    }
-
-    request.session.data['yearlyPensionContributions'] = yearlyPensionContributions;
-    console.log(yearlyPensionContributions);
-
-    var checkMode = request.session.data['checkMode'];
-    if (checkMode) {
-      response.redirect('/' + version + '/check-answers')
-    } else {
-      response.redirect('/' + version + '/student-loans')
-    }
-    
-  })
-
-  router.post('/' + version + '/amount-contributions-percentage', function(request, response) {
-
-    request.session.data['pension-contributions'] = "percentage";
-
-    // Calculate a yearly pension contributions
-    var yearlyPensionContributions = request.session.data['yearlyPensionContributions'];
-
-    if (request.session.data['pension-contributions'] == "fixed"){ 
-      yearlyPensionContributions = request.session.data['pension-contributions-amount'] * 12
-    } else {
-      yearlyPensionContributions = (request.session.data['pension-contributions-amount'] / 100) * request.session.data['yearlySalary']
-    }
-
-    request.session.data['yearlyPensionContributions'] = yearlyPensionContributions;
-    console.log(yearlyPensionContributions);
-
-    var checkMode = request.session.data['checkMode'];
-    if (checkMode) {
-      response.redirect('/' + version + '/check-answers')
-    } else {
-      response.redirect('/' + version + '/student-loans')
-    }
-    
-  })
-
-  router.post('/' + version + '/amount-contributions-fixed', function(request, response) {
-
-    request.session.data['pension-contributions'] = "fixed";
-    
     // Calculate a yearly pension contributions
     var yearlyPensionContributions = request.session.data['yearlyPensionContributions'];
 

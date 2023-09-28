@@ -21,10 +21,62 @@
         <tbody class="govuk-table__body">
 
           <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header">Error Screens</th>
+            <td class="govuk-table__cell">
+              
+                <ul class="govuk-list govuk-list--bullet">
+                  <li>Gross income</li>
+                  <li>Number of days</li>
+                  <li>Number of hours</li>
+                  <li>Income type</li>
+                  <li>State pension age</li>
+                </ul>
+                <p>----</p>
+                <ul class="govuk-list govuk-list--bullet">
+                  <li>Tax code (Invalid 1)</li>
+                  <li>Tax code (Invalid 2)</li>
+                  <li>Tax code (Invalid 3)</li>
+                  <li>Scottish rate</li>
+                  <li>Pension contributions as a percentage <br>(Cannot error)</li>
+                  <li>Pension contributions as amount in pounds <br>(Cannot error)</li>
+                  <li>Student loan <br>(Cannot error)</li>
+                </ul>
+                <p>----</p>
+              
+            </td>
+            <td class="govuk-table__cell">
+                <ul class="govuk-list">
+                  <li><a href="/errors/gross-income" class="govuk-link">Link</a></li>
+                  <li><a href="/errors/number-days" class="govuk-link">Link</a></li>
+                  <li><a href="/errors/number-hours" class="govuk-link">Link</a></li>
+                  <li><a href="/errors/income-type" class="govuk-link">Link</a></li>
+                  <li><a href="/errors/state-pension-age" class="govuk-link">Link</a></li>
+                </ul>
+                <p>----</p>
+                <ul class="govuk-list">
+                  <li><a href="/errors/taxcode" class="govuk-link">Link</a></li>
+                  <li><a href="/errors/taxcode2" class="govuk-link">Link</a></li>
+                  <li><a href="/errors/taxcode3" class="govuk-link">Link</a></li>
+                  <li><a href="/errors/scottish" class="govuk-link">Link</a></li>
+                  <li>&nbsp<br>&nbsp</li>
+                  <li>&nbsp<br>&nbsp</li>
+                  <li>&nbsp<br>&nbsp</li>
+                </ul>
+                <p>----</p>
+
+            </td>
+          </tr>
+
+          <tr class="govuk-table__row">
             <th scope="row" class="govuk-table__header">0-1-0</th>
             <td class="govuk-table__cell">
               <p class="govuk-!-font-weight-bold">Full version.</p>
-              <p>Version 0-0-3 with updates following UR to go to build.</p>
+              <p>Selected version (0-0-3) with updates following UR to go to build.</p>
+              <ul class="govuk-list govuk-list--bullet">
+                <li>Content updates</li>
+                <li>Improved pension contributions</li>
+                <li>Updated results layout</li>
+              </ul>
             </td>
             <td class="govuk-table__cell">
               <a href="/0-1-0/1" class="govuk-link">Prototype</a>
@@ -33,10 +85,11 @@
           <tr class="govuk-table__row">
             <th scope="row" class="govuk-table__header"></th>
             <td class="govuk-table__cell">
-              <p>Alternative version of Pension Contributions.</p>
+              <p style="text-decoration: line-through">Alternative version of Pension Contributions screen, prompted by user comments on order of questions. <br><br> Uses Javascript but degrades gracefully.</p>
+              <p>We settled on another way to handle this screen (included in V0-1-0 prototype) but left this here for reference.</p>
             </td>
             <td class="govuk-table__cell">
-              <a href="/0-1-0/amount-contributions-alt" class="govuk-link">Prototype</a>
+              <a href="/0-1-0/amount-contributions-alt" class="govuk-link">Link</a>
             </td>
           </tr>
 

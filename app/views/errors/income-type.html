@@ -1,0 +1,75 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Income type" %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+  <a class="govuk-back-link" href="/" style="cursor:pointer;" >Back</a>
+<main class="govuk-main-wrapper " id="main-content" role="main">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: [
+        {
+          text: "Select if this income is from a job or a private pension",
+          href: "#income-type"
+        }
+      ]
+    }) }}
+
+    <form action="#" method="post">
+
+      {% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+      {{ govukRadios({
+        classes: "govuk-radios--inline",
+        name: "income-type",
+        value: data['income-type'],
+        fieldset: {
+          legend: {
+            text: "Where is this income from?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--xl"
+          }
+        },
+        items: [
+          {
+            value: "job",
+            text: "A job"
+          },
+          {
+            value: "private pension",
+            text: "A private pension"
+          }
+        ],
+        errorMessage: {
+          text: "Select if this income is from a job or a private pension"
+        }
+      }) }}
+      <details class="govuk-details" data-module="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">
+            Why we ask this
+          </span>
+        </summary>
+        <div class="govuk-details__text">
+          This helps us work out if you pay National Insurance on your income. You do not pay National Insurance on private pension income.
+        </div>
+      </details>
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+
+  </div>
+</div>
+</main>
+</div>
+
+{% endblock %}

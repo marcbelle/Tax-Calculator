@@ -1,0 +1,54 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Allowances amount" %}
+
+{% set version="0-1-0" %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+  <a class="govuk-back-link" onclick="history.back();" style="cursor:pointer;" >Back</a>
+<main class="govuk-main-wrapper " id="main-content" role="main">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-xl">
+      How much are your monthly pension contributions?
+    </h1>
+    <form action="#" method="post">
+
+      {% from "govuk/components/input/macro.njk" import govukInput %}
+
+      {{ govukInput({
+        id: "pension-contributions-amount",
+        name: "pension-contributions-amount",
+        label: {
+          text: "Amount",
+          classes: "govuk-label--m",
+          isPageHeading: false
+        },
+        suffix: {
+          text: "%"
+        },
+        value: data['pension-contributions-amount'],
+        classes: "govuk-input--width-10",
+        spellcheck: false
+      }) }}
+
+
+      
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+    <p><a href="/{{version}}/amount-contributions-fixed" class="govuk-link">Enter this as an amount in pounds</a></p>
+
+
+  </div>
+</div>
+</main>
+</div>
+
+{% endblock %}

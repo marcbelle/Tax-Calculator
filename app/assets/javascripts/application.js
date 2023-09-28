@@ -14,7 +14,7 @@ window.GOVUKPrototypeKit.documentReady(() => {
     
 
    if(document.getElementById('pension-contributions').checked) {
-      //Male radio button is checked
+      //Pound radio button is checked
        document.getElementById('suffix').classList.remove("govuk-input__suffix")
        document.getElementById('suffix').innerHTML = ""
 
@@ -28,7 +28,7 @@ window.GOVUKPrototypeKit.documentReady(() => {
 
 
     } else if(document.getElementById('pension-contributions-2').checked) {
-      //Female radio button is checked
+      //Percentage radio button is checked
       document.getElementById('prefix').classList.remove("govuk-input__prefix")
       document.getElementById('prefix').innerHTML = ""
 
