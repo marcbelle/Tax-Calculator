@@ -11,7 +11,7 @@ require('./routing/0-0-1/routes.js') (router);
 require('./routing/0-0-2/routes.js') (router);
 require('./routing/0-0-3/routes.js') (router);
 require('./routing/0-1-0/routes.js') (router);
-require('./routing/errors/routes.js') (router);
+require('./routing/alts/routes.js') (router);
 
 
 

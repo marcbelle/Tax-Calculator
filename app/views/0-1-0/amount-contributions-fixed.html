@@ -15,7 +15,7 @@
     <h1 class="govuk-heading-xl">
       How much are your monthly pension contributions?
     </h1>
-    <p class="govuk-body">For example, £100 or £200.50. Do not include any contributions from your employer.</p>
+    <p class="govuk-body">Do not include any contributions from your employer.</p>
     <form action="#" method="post">
 
       {% from "govuk/components/input/macro.njk" import govukInput %}
@@ -30,6 +30,9 @@
         },
         prefix: {
           text: "£"
+        },
+        hint: {
+          text: "For example, £100 or £200.50."
         },
         value: data['pension-contributions-amount'],
         classes: "govuk-input--width-5",

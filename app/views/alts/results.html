@@ -27,8 +27,7 @@
         <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
         <strong class="govuk-warning-text__text">
           <span class="govuk-warning-text__assistive">Warning</span>
-          <p class="govuk-error-message">You used a tax code for those with an income £100,000 or less. If your income was over £100,000 you would be given a different tax code to reflect a <a href="https://www.gov.uk/income-tax-rates/income-over-100000" class="govuk-link" target="_blank">reduced personal allowance (opens in a new tab)</a>.<br><br>
-          If you do not know or have a tax code for this amount you can leave the tax code blank.</p>
+          You used a tax code for those with an income of £100,000 or less. If you do not know your tax code, you can leave it blank. We will still calculate your <a href="https://www.gov.uk/income-tax-rates/income-over-100000" class="govuk-link" target="_blank">reduced Personal Allowance (opens in a new tab)</a>.
         </strong>
       </div>
     {% endif %}
@@ -54,7 +53,7 @@
           <td class="govuk-table__cell govuk-!-font-weight-bold govuk-table__cell--numeric">£{{ data['yearlySalary'] | toFixed(2) | formatPounds }}</td>
         </tr>
         <tr class="govuk-table__row">
-          <td class="govuk-table__cell">Tax-free allowance</td>
+          <td class="govuk-table__cell">Personal Allowance</td>
           <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['taxFreeAmount'] | formatPounds }}.00</td>
         </tr>
 
@@ -122,7 +121,7 @@
           <td class="govuk-table__cell govuk-!-font-weight-bold govuk-table__cell--numeric">£{{ data['monthlySalary'] | round(2) | toFixed(2) | formatPounds }}</td>
         </tr>
         <tr class="govuk-table__row">
-          <td class="govuk-table__cell">Tax-free allowance</td>
+          <td class="govuk-table__cell">Personal Allowance</td>
           <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['taxFreeAmount'] | formatPounds }}.00</td>
         </tr>
 
@@ -189,7 +188,7 @@
           <td class="govuk-table__cell govuk-!-font-weight-bold govuk-table__cell--numeric">£{{ data['weeklySalary'] | round(2) | toFixed(2) | formatPounds }}</td>
         </tr>
         <tr class="govuk-table__row">
-          <td class="govuk-table__cell">Tax-free allowance</td>
+          <td class="govuk-table__cell">Personal Allowance</td>
           <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['taxFreeAmount'] | formatPounds }}.00</td>
         </tr>
 
@@ -293,13 +292,13 @@
       
       {% if (data['tax-code'] == "" or data['tax-code'] == undefined) %}
         {% if (data['taperMode'] == false) %}
-          <li>Your tax-free allowance is £12,570 (because you did not provide a tax code)</li>
+          <li>Your Personal Allowance is £12,570 (because you did not provide a tax code)</li>
         {% endif %}
       {% endif %}
 
 
         {% if (data['taperMode'] == true) %}
-          <li>You have a <a href="https://www.gov.uk/income-tax-rates/income-over-100000" class="govuk-link" target="_blank">reduced personal allowance (opens in a new tab)</a> because your income is over £100,000.</li>
+          <li>You have a <a href="https://www.gov.uk/income-tax-rates/income-over-100000" class="govuk-link" target="_blank">reduced Personal Allowance (opens in a new tab)</a> because your income is over £100,000.</li>
         {% endif %}
 
 
