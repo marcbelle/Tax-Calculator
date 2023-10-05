@@ -7,10 +7,22 @@
 {% block content %}
 
 <div class="govuk-width-container">
-  <a class="govuk-back-link" onclick="history.back();" style="cursor:pointer;" >Back</a>
+  <a class="govuk-back-link" href="/" style="cursor:pointer;" >Back</a>
 <main class="govuk-main-wrapper " id="main-content" role="main">
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
+
+    {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: [
+        {
+          text: "Enter your monthly pension contributions amount in the correct format, for example 5%",
+          href: "#pension-contributions-amount"
+        }
+      ]
+    }) }}
 
     <h1 class="govuk-heading-xl">
       How much are your monthly pension contributions?
@@ -29,6 +41,9 @@
         },
         suffix: {
           text: "%"
+        },
+        errorMessage: {
+          text: "Enter your monthly pension contributions amount in the correct format, for example 5%" | safe
         },
         value: data['pension-contributions-amount'],
         classes: "govuk-input--width-10",

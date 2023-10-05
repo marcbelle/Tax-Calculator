@@ -126,7 +126,9 @@ module.exports = function(router) {
         response.redirect('/' + version + '/check-answers')
 
       } else {
-        response.redirect('/' + version + '/income-type')
+        //response.redirect('/' + version + '/income-type')
+        request.session.data['income-type'] = "job";
+        response.redirect('/' + version + '/state-pension-age')
       }
 
 
@@ -212,7 +214,9 @@ if the anwser is NOT these look for checkmode and determine if go to end or inco
       response.redirect('/' + version + '/check-answers')
       
     } else {
-      response.redirect('/' + version + '/income-type')
+      //response.redirect('/' + version + '/income-type')
+      request.session.data['income-type'] = "job";
+      response.redirect('/' + version + '/state-pension-age')
     }
 
     
@@ -278,7 +282,9 @@ if the anwser is NOT these look for checkmode and determine if go to end or inco
       response.redirect('/' + version + '/check-answers')
       
     } else {
-      response.redirect('/' + version + '/income-type')
+      //response.redirect('/' + version + '/income-type')
+      request.session.data['income-type'] = "job";
+      response.redirect('/' + version + '/state-pension-age')
     }
 
     

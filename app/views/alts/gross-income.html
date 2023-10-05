@@ -16,11 +16,15 @@
       titleText: "There is a problem",
       errorList: [
         {
-          text: "Enter a gross amount, in pounds",
+          text: "Enter the amount you are paid",
           href: "#gross-income-amount"
         },
         {
-          text: "Select the frequency you are paid your gross amount",
+          text: "Enter the amount you are paid in the correct format, for example £600 or £193.54",
+          href: "#gross-income-amount"
+        },
+        {
+          text: "Select how often you are paid this amount",
           href: "#gross-income-frequency"
         }
       ]
@@ -49,7 +53,7 @@
           text: "£"
         },
         errorMessage: {
-          text: "Enter a gross amount, in pounds"
+          text: "Enter the amount you are paid<br>Enter the amount you are paid in the correct format, for example £600 or £193.54" | safe
         },
         classes: "govuk-input--width-10",
         spellcheck: false
@@ -94,7 +98,7 @@
           }
         ],
         errorMessage: {
-          text: "Select the frequency you are paid your gross amount"
+          text: "Select how often you are paid this amount"
         }
       }) }}
       

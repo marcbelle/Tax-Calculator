@@ -59,23 +59,7 @@
             </dd>
           </div>
           {% endif %}
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key govuk-!-width-one-quarter">
-              Income type
-            </dt>
-            <dd class="govuk-summary-list__value govuk-!-width-one-third">
-              {% if (data['income-type'] == "job") %}
-                 Income from a job
-              {% else %}
-                 Private pension income
-              {% endif %}
-            </dd>
-            <dd class="govuk-summary-list__actions">
-              <a class="govuk-link" href="/{{version}}/income-type">
-                Change<span class="govuk-visually-hidden"> gross income</span>
-              </a>
-            </dd>
-          </div>
+          
           {% if (data['income-type'] == "job") %}
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key govuk-!-width-one-quarter">

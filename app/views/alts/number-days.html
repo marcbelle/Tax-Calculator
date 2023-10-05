@@ -15,7 +15,15 @@
       titleText: "There is a problem",
       errorList: [
         {
-          text: "Enter how many days a week you work",
+          text: "Enter the number of days a week you work",
+          href: "#number-days"
+        },
+        {
+          text: "Enter days worked in a week as a number, like 5 or 4.5",
+          href: "#number-days"
+        },
+        {
+          text: "Enter a number between 1 and 7",
           href: "#number-days"
         }
       ]
@@ -40,7 +48,7 @@
         classes: "govuk-input--width-10",
         spellcheck: false,
         errorMessage: {
-          text: "Enter how many days a week you work"
+          text: "Enter the number of days a week you work<br>Enter days worked in a week as a number, like 5 or 4.5<br>Enter a number between 1 and 7" | safe
         }
       }) }}
     
