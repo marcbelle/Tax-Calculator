@@ -18,7 +18,11 @@
       titleText: "There is a problem",
       errorList: [
         {
-          text: "Enter your monthly pension contributions amount in the correct format, for example 5%",
+          text: "Enter your monthly pension contributions amount in the correct format",
+          href: "#pension-contributions-amount"
+        },
+        {
+          text: "Your monthly pension contributions must be less than 100% of your income",
           href: "#pension-contributions-amount"
         }
       ]
@@ -42,8 +46,11 @@
         suffix: {
           text: "%"
         },
+        hint: {
+          text: "For example, 5% or 6.23%"
+        },
         errorMessage: {
-          text: "Enter your monthly pension contributions amount in the correct format, for example 5%" | safe
+          text: "Enter your monthly pension contributions amount in the correct format<br>Your monthly pension contributions must be less than 100% of your income" | safe
         },
         value: data['pension-contributions-amount'],
         classes: "govuk-input--width-10",

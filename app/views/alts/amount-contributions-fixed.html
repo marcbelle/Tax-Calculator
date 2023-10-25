@@ -18,7 +18,11 @@
       titleText: "There is a problem",
       errorList: [
         {
-          text: "Enter your monthly pension contributions amount in the correct format",
+          text: "Your monthly pension contributions must be less than £[GROSS-MONTHLY-AMOUNT]",
+          href: "#pension-contributions-amount"
+        },
+        {
+          text: "Your monthly pension contributions can only include pounds and pence",
           href: "#pension-contributions-amount"
         }
       ]
@@ -43,10 +47,10 @@
           text: "£"
         },
         hint: {
-          text: "For example, £100 or £200.50."
+          text: "For example, £100 or £200.50"
         },
         errorMessage: {
-          text: "Enter your monthly pension contributions amount in the correct format" | safe
+          text: "Your monthly pension contributions must be less than £[GROSS-MONTHLY-AMOUNT]<br>Your monthly pension contributions can only include pounds and pence" | safe
         },
         value: data['pension-contributions-amount'],
         classes: "govuk-input--width-10",
