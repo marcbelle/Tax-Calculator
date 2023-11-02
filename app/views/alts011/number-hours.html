@@ -1,0 +1,67 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Number of hours" %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+  <a class="govuk-back-link" href="/" style="cursor:pointer;" >Back</a>
+<main class="govuk-main-wrapper " id="main-content" role="main">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: [
+        {
+          text: "Enter the number of hours a week you work",
+          href: "#number-hours"
+        },
+        {
+          text: "Enter hours worked in a week as a number, like 8 or 37.5",
+          href: "#number-hours"
+        },
+        {
+          text: "Enter hours worked in a week between 1 and 168",
+          href: "#number-hours"
+        }
+      ]
+    }) }}
+
+    <form action="#" method="post">
+
+      {% from "govuk/components/input/macro.njk" import govukInput %}
+
+      {{ govukInput({
+        id: "number-hours",
+        name: "number-hours",
+        label: {
+          text: "How many hours a week do you usually work?",
+          classes: "govuk-label--xl",
+          isPageHeading: true
+        },
+        hint: {
+          text: "If you do not know an approximate number is fine."
+        },
+        value: data['number-hours'],
+        classes: "govuk-input--width-10",
+        spellcheck: false,
+        errorMessage: {
+          text: "Enter how many hours a week you work<br>Enter hours worked in a week as a number, like 8 or 37.5<br>Enter hours worked in a week between 1 and 168" | safe
+        }
+      }) }}
+    
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+
+  </div>
+</div>
+</main>
+</div>
+
+{% endblock %}

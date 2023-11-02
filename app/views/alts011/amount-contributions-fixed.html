@@ -1,0 +1,76 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Allowances amount" %}
+
+{% set version="0-1-0" %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+  <a class="govuk-back-link" href="/" style="cursor:pointer;" >Back</a>
+<main class="govuk-main-wrapper " id="main-content" role="main">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: [
+        {
+          text: "Your monthly pension contributions must be less than £[GROSS-MONTHLY-AMOUNT]",
+          href: "#pension-contributions-amount"
+        },
+        {
+          text: "Your monthly pension contributions can only include pounds and pence",
+          href: "#pension-contributions-amount"
+        }
+      ]
+    }) }}
+
+    <h1 class="govuk-heading-xl">
+      How much are your monthly pension contributions?
+    </h1>
+    <form action="#" method="post">
+
+      {% from "govuk/components/input/macro.njk" import govukInput %}
+
+      {{ govukInput({
+        id: "pension-contributions-amount",
+        name: "pension-contributions-amount",
+        label: {
+          text: "Amount",
+          classes: "govuk-label--m",
+          isPageHeading: false
+        },
+        prefix: {
+          text: "£"
+        },
+        hint: {
+          text: "For example, £100 or £200.50"
+        },
+        errorMessage: {
+          text: "Your monthly pension contributions must be less than £[GROSS-MONTHLY-AMOUNT]<br>Your monthly pension contributions can only include pounds and pence" | safe
+        },
+        value: data['pension-contributions-amount'],
+        classes: "govuk-input--width-10",
+        spellcheck: false
+      }) }}
+
+
+      
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+    <p><a href="/{{version}}/amount-contributions-percentage" class="govuk-link">Enter this as a percentage</a></p>
+
+
+  </div>
+</div>
+</main>
+</div>
+
+{% endblock %}

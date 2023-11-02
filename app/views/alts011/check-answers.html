@@ -1,0 +1,250 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Check answers" %}
+
+{% set version="0-1-0" %}
+
+
+{% block content %}
+
+<div class="govuk-width-container">
+  <a class="govuk-back-link" onclick="history.back();" style="cursor:pointer;" >Back</a>
+<main class="govuk-main-wrapper " id="main-content" role="main">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-xl">Check your answers</h1>
+    <h2 class="govuk-heading-m">Your income</h2>
+        <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key govuk-!-width-one-quarter">
+              Gross income
+            </dt>
+            <dd class="govuk-summary-list__value govuk-!-width-one-third">
+              £{{ data['gross-income-amount'] | formatPounds }} {{ data['gross-income-frequency'] }}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="/{{version}}/gross-income">
+                Change<span class="govuk-visually-hidden"> gross income</span>
+              </a>
+            </dd>
+          </div>
+          {% if (data['gross-income-frequency'] == "a day") %}
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key govuk-!-width-one-quarter">
+              Days worked a week
+            </dt>
+            <dd class="govuk-summary-list__value govuk-!-width-one-third">
+              {{ data['number-days'] }}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="/{{version}}/number-days">
+                Change<span class="govuk-visually-hidden"> number of days worked a week</span>
+              </a>
+            </dd>
+          </div>
+          {% endif %}
+          {% if (data['gross-income-frequency'] == "an hour") %}
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key govuk-!-width-one-quarter">
+              Hours worked a week
+            </dt>
+            <dd class="govuk-summary-list__value govuk-!-width-one-third">
+              {{ data['number-hours'] }}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="/{{version}}/number-hours">
+                Change<span class="govuk-visually-hidden"> number of hours worked a week</span>
+              </a>
+            </dd>
+          </div>
+          {% endif %}
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key govuk-!-width-one-quarter">
+              Income type
+            </dt>
+            <dd class="govuk-summary-list__value govuk-!-width-one-third">
+              {% if (data['income-type'] == "job") %}
+                 Income from a job
+              {% else %}
+                 Private pension income
+              {% endif %}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="/{{version}}/income-type">
+                Change<span class="govuk-visually-hidden"> gross income</span>
+              </a>
+            </dd>
+          </div>
+          {% if (data['income-type'] == "job") %}
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key govuk-!-width-one-quarter">
+              Over State Pension age
+            </dt>
+            <dd class="govuk-summary-list__value govuk-!-width-one-third">
+              {{ data['state-pension-age'] }}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="/{{version}}/state-pension-age">
+                Change<span class="govuk-visually-hidden"> over state pension age</span>
+              </a>
+            </dd>
+          </div>
+          {% endif %}          
+        </dl>
+
+
+        <h2 class="govuk-heading-m">Additional questions (Optional)</h2>
+          <div class="govuk-hint">
+            <p>Your results may be more accurate if you answer additional questions. </p>
+          </div>
+          <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+
+            <div class="govuk-summary-list__row">
+              <dt class="govuk-summary-list__key govuk-!-width-one-quarter">
+                Tax code
+              </dt>
+              <dd class="govuk-summary-list__value govuk-!-width-one-third">
+                {% if (data['tax-code'] == undefined) or (data['tax-code'] == "")  %}
+                Not provided
+              {% else %}
+  
+                <p>{{ data['tax-code'] }}</p>
+  
+                {% if (data['tax-code'] == "1257L") %}
+  
+                  {% if (data['yearlySalary'] > 100000) %}
+
+                    <div class="govuk-warning-text">
+                      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                      <strong class="govuk-warning-text__text">
+                        <span class="govuk-warning-text__assistive">Warning</span>
+                        This is the default tax code for those on less than £100,000. <span class="govuk-error-message">If you are sure this is correct you can leave this otherwise if you do not have a tax code for this salary you should leave this blank.</span>
+                      </strong>
+                    </div>
+                  {% endif %}
+  
+                {% else %}
+  
+                  {% if (data['changeSalary'] == true) %}
+                    <div class="govuk-warning-text">
+                      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+                      <strong class="govuk-warning-text__text">
+                        <span class="govuk-warning-text__assistive">Warning</span>
+                        You updated your income. <span class="govuk-error-message">Check this tax code is still correct.</span>
+                      </strong>
+                    </div>
+                  {% endif %}
+  
+                {% endif %}
+  
+              {% endif %}
+              </dd>
+              <dd class="govuk-summary-list__actions">
+                {% if (data['tax-code'] == undefined) or (data['tax-code'] == "")  %}
+                      <a class="govuk-link" href="/{{version}}/taxcode">
+                        Add<span class="govuk-visually-hidden"> tax code</span>
+                      </a>
+                {% else %}
+                  <a class="govuk-link" href="/{{version}}/taxcode">Change<span class="govuk-visually-hidden"> tax code</span></a> | <a class="govuk-link" href="/{{version}}/remove?option=taxcode">Remove<span class="govuk-visually-hidden"> tax code</span></a>
+                {% endif %}
+              </dd>
+            </div>
+
+            {% if (data['tax-code'] == undefined) or (data['tax-code'] == "")  %}
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key govuk-!-width-one-quarter">
+              Scottish Income Tax rate
+            </dt>
+            <dd class="govuk-summary-list__value govuk-!-width-one-third">
+              {% if (data['scottish-rate'] == undefined)%}
+                No
+              {% else %}
+                {{ data['scottish-rate'] }}
+              {% endif %}
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              <a class="govuk-link" href="/{{version}}/scottish">
+                Change<span class="govuk-visually-hidden"> Scottish Income Tax Rate</span>
+              </a>
+            </dd>
+          </div>
+          {% endif %}
+
+            {% if (data['income-type'] == "job") %}
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key govuk-!-width-one-quarter">
+              Pension contributions
+            </dt>
+            <dd class="govuk-summary-list__value govuk-!-width-one-third">
+
+              
+                {% if (data['pension-contributions'] == "percentage")  %}
+                  {{ data['pension-contributions-amount'] }}% a month
+                {% elseif (data['pension-contributions'] == "fixed") %}
+                  £{{ data['pension-contributions-amount'] | formatPounds }} a month
+                {% else %}
+                  None
+                {% endif %}
+
+
+
+            </dd>
+            <dd class="govuk-summary-list__actions">
+
+              {% if (data['pension-contributions'] == "percentage") or (data['pension-contributions'] == "fixed") %}
+              <a class="govuk-link" href="/{{version}}/amount-contributions">Change<span class="govuk-visually-hidden"> pension contributions</span></a> | <a class="govuk-link" href="/{{version}}/remove?option=pension-contributions">Remove<span class="govuk-visually-hidden"> pension contributions</span></a>
+              {% else %}
+              <a class="govuk-link" href="/{{version}}/amount-contributions">
+                Add<span class="govuk-visually-hidden"> pension contributions</span>
+              </a>
+                
+              {% endif %}
+            </dd>
+            
+          </div>
+          {% endif %}          
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key govuk-!-width-one-quarter">
+              Student loan
+            </dt>
+            <dd class="govuk-summary-list__value govuk-!-width-one-third">
+              {% if (data['student-loans'] == undefined) or (data['student-loans'] == "None") %}
+                None
+              {% else %}
+                {% for studentLoans in data['student-loans'] %}
+                  <p>{{ studentLoans }}</p>
+                {% endfor %}
+              {% endif %} 
+            </dd>
+            <dd class="govuk-summary-list__actions">
+              {% if (data['student-loans'] == undefined) or (data['student-loans'] == "None") %}
+                <a class="govuk-link" href="/{{version}}/student-loans">
+                  Add<span class="govuk-visually-hidden"> student loans</span>
+                </a>
+              {% else %}
+                <a class="govuk-link" href="/{{version}}/student-loans">Change<span class="govuk-visually-hidden"> student loans</span></a> | <a class="govuk-link" href="/{{version}}/remove?option=student-loans">Remove<span class="govuk-visually-hidden"> student loans</span></a>
+              {% endif %}
+            </dd>
+          </div>
+
+
+          
+
+          </dl>
+        <form action="#" method="post" novalidate>
+
+          <input type="hidden" name="answers-checked" value="true">
+  
+          {{ govukButton({
+            text: "Calculate take-home pay"
+          }) }}
+  
+        </form>
+
+  </div>
+</div>
+</main>
+</div>
+
+{% endblock %}

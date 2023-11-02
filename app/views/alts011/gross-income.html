@@ -1,0 +1,118 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Gross income" %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+  <a class="govuk-back-link" href="/" style="cursor:pointer;" >Back</a>
+<main class="govuk-main-wrapper " id="main-content" role="main">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: [
+        {
+          text: "Enter the amount you are paid",
+          href: "#gross-income-amount"
+        },
+        {
+          text: "Enter the amount you are paid in the correct format, for example £600 or £193.54",
+          href: "#gross-income-amount"
+        },
+        {
+          text: "Select how often you are paid this amount",
+          href: "#gross-income-frequency"
+        }
+      ]
+    }) }}
+
+    <h1 class="govuk-heading-xl">
+      How much are you paid?
+    </h1>
+    <form action="#" method="post">
+
+      {% from "govuk/components/input/macro.njk" import govukInput %}
+
+      {{ govukInput({
+        id: "gross-income-amount",
+        name: "gross-income-amount",
+        label: {
+          text: "Gross amount, in pounds",
+          classes: "govuk-label--m",
+          isPageHeading: false
+        },
+        hint: {
+          text: "This is the amount you are paid before tax is taken."
+        },
+        value: data['gross-income-amount'],
+        prefix: {
+          text: "£"
+        },
+        errorMessage: {
+          text: "Enter the amount you are paid<br>Enter the amount you are paid in the correct format, for example £600 or £193.54" | safe
+        },
+        classes: "govuk-input--width-10",
+        spellcheck: false
+      }) }}
+
+      {% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+      {{ govukRadios({
+        name: "gross-income-frequency",
+        value: data['gross-income-frequency'],
+        fieldset: {
+          legend: {
+            text: "How often are you paid this amount?",
+            isPageHeading: false,
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        items: [
+          {
+            value: "a year",
+            text: "Yearly"
+          },
+          {
+            value: "a month",
+            text: "Monthly"
+          },
+          {
+            value: "every 4 weeks",
+            text: "Every 4 weeks"
+          },
+          {
+            value: "a week",
+            text: "Weekly"
+          },
+          {
+            value: "a day",
+            text: "Daily"
+          },
+          {
+            value: "an hour",
+            text: "Hourly"
+          }
+        ],
+        errorMessage: {
+          text: "Select how often you are paid this amount"
+        }
+      }) }}
+      
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+
+  </div>
+</div>
+</main>
+</div>
+
+{% endblock %}

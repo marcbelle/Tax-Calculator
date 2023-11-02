@@ -1,0 +1,79 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Remove option" %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+  <a class="govuk-back-link" onclick="history.back();" style="cursor:pointer;" >Back</a>
+<main class="govuk-main-wrapper " id="main-content" role="main">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <form action="#" method="post">
+
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset" aria-describedby="remove-option-hint">
+          <legend class="govuk-fieldset__legend govuk-fieldset__legend--xl">
+            <h1 class="govuk-fieldset__heading">
+              Are you sure you want to remove 
+              {% if (data['option'] == "taxcode") %}
+                  your tax code?
+              {% elseif (data['option'] == "pension-contributions") %}
+                  your pension contributions?
+              {% elseif (data['option'] == "student-loans") %}
+                  {% set x = 0 %}
+                  {% for studentLoans in data['student-loans'] %}
+                    {% set x = x+1 %}
+                  {% endfor %}
+                  
+                  {% if (x == 1) %}
+                    your student loan?
+                  {% else %}
+                    your student loans?
+                  {% endif %}
+              {% elseif (data['option'] == "allowances") %}
+                your allowances?
+              {% elseif (data['option'] == "deductions") %}
+                your deductions?
+              
+              {% else %}
+                this?
+              {% endif %}
+
+
+              
+              
+
+            </h1>
+          </legend>
+          <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="remove-option" name="remove-option" type="radio" value="Yes">
+              <label class="govuk-label govuk-radios__label" for="remove-option">
+                Yes
+              </label>
+            </div>
+            <div class="govuk-radios__item">
+              <input class="govuk-radios__input" id="remove-option-2" name="remove-option" type="radio" value="No">
+              <label class="govuk-label govuk-radios__label" for="remove-option-2">
+                No
+              </label>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+
+  </div>
+</div>
+</main>
+</div>
+
+{% endblock %}

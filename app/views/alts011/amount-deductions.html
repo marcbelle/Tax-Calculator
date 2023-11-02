@@ -1,0 +1,75 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Deductions amount" %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+  <a class="govuk-back-link" onclick="history.back();" style="cursor:pointer;" >Back</a>
+<main class="govuk-main-wrapper " id="main-content" role="main">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-xl">
+      How much are your deductions?
+    </h1>
+    <p>Deductions are anything taken from your pay before you have to pay tax. For example, employee benefits.</p>
+    <form action="#" method="post">
+
+      {% from "govuk/components/input/macro.njk" import govukInput %}
+
+      {{ govukInput({
+        id: "deductions-amount",
+        name: "deductions-amount",
+        label: {
+          text: "Amount, in pounds",
+          classes: "govuk-label--m",
+          isPageHeading: false
+        },
+        hint: {
+          text: "For example, £600 or £193.54"
+        },
+        value: data['deductions-amount'],
+        prefix: {
+          text: "£"
+        },
+        classes: "govuk-input--width-10",
+        spellcheck: false
+      }) }}
+
+      {% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+      {{ govukRadios({
+        name: "deductions-frequency",
+        value: data['deductions-frequency'],
+        fieldset: {
+          legend: {
+            text: "How often is this deducted?",
+            isPageHeading: false,
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        items: [
+          {
+            value: "a year",
+            text: "Yearly"
+          },
+          {
+            value: "a month",
+            text: "Monthly"
+          }
+        ]
+      }) }}
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+
+  </div>
+</div>
+</main>
+</div>
+
+{% endblock %}

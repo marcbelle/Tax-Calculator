@@ -1,0 +1,90 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Gross income" %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+  <a class="govuk-back-link" onclick="history.back();" style="cursor:pointer;" >Back</a>
+<main class="govuk-main-wrapper " id="main-content" role="main">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-xl">
+      How much are you paid?
+    </h1>
+    <form action="#" method="post">
+
+      {% from "govuk/components/input/macro.njk" import govukInput %}
+
+      {{ govukInput({
+        id: "gross-income-amount",
+        name: "gross-income-amount",
+        label: {
+          text: "Gross amount, in pounds",
+          classes: "govuk-label--m",
+          isPageHeading: false
+        },
+        hint: {
+          text: "This is the amount you are paid before tax is taken."
+        },
+        value: data['gross-income-amount'],
+        prefix: {
+          text: "£"
+        },
+        classes: "govuk-input--width-10",
+        spellcheck: false
+      }) }}
+
+      {% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+      {{ govukRadios({
+        name: "gross-income-frequency",
+        value: data['gross-income-frequency'],
+        fieldset: {
+          legend: {
+            text: "How often are you paid this amount?",
+            isPageHeading: false,
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        items: [
+          {
+            value: "a year",
+            text: "Yearly"
+          },
+          {
+            value: "a month",
+            text: "Monthly"
+          },
+          {
+            value: "every 4 weeks",
+            text: "Every 4 weeks"
+          },
+          {
+            value: "a week",
+            text: "Weekly"
+          },
+          {
+            value: "a day",
+            text: "Daily"
+          },
+          {
+            value: "an hour",
+            text: "Hourly"
+          }
+        ]
+      }) }}
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+
+  </div>
+</div>
+</main>
+</div>
+
+{% endblock %}

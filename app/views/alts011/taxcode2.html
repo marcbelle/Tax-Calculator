@@ -1,0 +1,82 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Tax code" %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+  <a class="govuk-back-link" href="/" style="cursor:pointer;" >Back</a>
+<main class="govuk-main-wrapper " id="main-content" role="main">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    {% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+
+    {{ govukErrorSummary({
+      titleText: "There is a problem",
+      errorList: [
+        {
+          text: "Enter a tax code that ends with the letter L, M, N or T",
+          href: "#tax-code"
+        }
+      ]
+    }) }}
+
+    <form action="#" method="post">
+
+      {% from "govuk/components/input/macro.njk" import govukInput %}
+
+      {{ govukInput({
+        id: "tax-code",
+        name: "tax-code",
+        label: {
+          text: "What is your tax code?",
+          classes: "govuk-label--xl",
+          isPageHeading: true
+        },
+        hint: {
+          text: "Your tax code will tell us if you owe tax from a previous year or have any allowances, such as Blind Person's Allowance."
+          | safe},
+        value: "0238Z",
+        errorMessage: {
+          text: "Enter a tax code that ends with the letter L, M, N or T"
+        },
+        classes: "govuk-input--width-10",
+        spellcheck: false
+      }) }}
+    
+      <details class="govuk-details" data-module="govuk-details">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">
+            I do not know my tax code
+          </span>
+        </summary>
+        <div class="govuk-details__text">
+          <p class="govuk-body">You can usually find your tax code:</p>
+          <ul class="govuk-list govuk-list--bullet">
+            <li>in the <a href="https://www.gov.uk/government/publications/the-official-hmrc-app/the-free-hmrc-app" class="govuk-link" target="_blank">HMRC app (opens in a new tab)</a></li>
+            <li>on a recent payslip</li>
+            <li>on a P45</li>
+            <li>on a ‘Tax Code Notice’ letter from HMRC if you get one</li>
+          </ul>
+          {% if (data['yearlySalary'] > 100000) %}
+            <p class="govuk-body">If you do not know it and you earn over £100,000 a year, we will still calculate your <a href="https://www.gov.uk/income-tax-rates/income-over-100000" class="govuk-link" target="_blank">reduced Personal Allowance (opens in a new tab)</a>.</p>
+          {% else %}
+            <p class="govuk-body">If you do not know it we will use 1257L, unless you earn over £100,000 a year. 1257L is the most common tax code.</p>
+          {% endif %}
+           
+        </div>
+      </details>
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+
+  </div>
+</div>
+</main>
+</div>
+
+{% endblock %}

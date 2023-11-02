@@ -1,0 +1,265 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Home" %}
+
+{% set version="alts" %}
+
+
+{% block content %}
+
+<div class="govuk-width-container">
+  <a class="govuk-back-link" href="/" style="cursor:pointer;" >Back</a>
+  </a>
+<main class="govuk-main-wrapper " id="main-content" role="main">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h1 class="govuk-heading-xl">
+        Your estimated take-home pay for 2023/24
+      </h1>
+    </div>
+  </div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    
+
+    {% from "govuk/components/tabs/macro.njk" import govukTabs %}
+    {% from "govuk/components/table/macro.njk" import govukTable %}
+
+    {% set yearlyHtml %}
+
+    <div class="govuk-panel govuk-panel--confirmation">
+      <h2 class="govuk-panel__title">£XX,XXX.XX<br>
+        <span class="govuk-panel__body">a year</span>
+      </h2>
+    </div>
+
+    <h2 class="govuk-heading-m">How we calculated this:</h2>
+
+    <table class="govuk-table">
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell govuk-!-font-weight-bold">Gross income</td>
+          <td class="govuk-table__cell govuk-!-font-weight-bold govuk-table__cell--numeric">£XX,XXX.XX</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Personal Allowance</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">£XX,XXX.XX</td>
+        </tr>
+
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell govuk-!-font-weight-bold">Taxable income</td>
+          <td class="govuk-table__cell govuk-!-font-weight-bold govuk-table__cell--numeric">£XX,XXX.XX</td>
+        </tr>
+
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Income tax at 20%</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">£X,XXX.XX</td>
+        </tr>
+
+
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">National Insurance</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">£0.00</td>
+        </tr>
+
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell govuk-!-font-weight-bold">Take-home pay</td>
+          <td class="govuk-table__cell govuk-!-font-weight-bold govuk-table__cell--numeric">£XX,XXX.XX</td>
+        </tr>
+      </tbody>
+    </table>
+
+    {% endset -%}
+
+
+    {% set monthlyHtml %}
+    <div class="govuk-panel govuk-panel--confirmation">
+      <h2 class="govuk-panel__title">£X,XXX.XX<br>
+        <span class="govuk-panel__body">a month</span>
+      </h2>
+    </div>
+
+    <h2 class="govuk-heading-m">How we calculated this:</h2>
+
+    <table class="govuk-table">
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell govuk-!-font-weight-bold">Gross income</td>
+          <td class="govuk-table__cell govuk-!-font-weight-bold govuk-table__cell--numeric">£X,XXX.XX</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Personal Allowance</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">£X,XXX.XX</td>
+        </tr>
+
+
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell govuk-!-font-weight-bold">Taxable income</td>
+          <td class="govuk-table__cell govuk-!-font-weight-bold govuk-table__cell--numeric">£X,XXX.XX</td>
+        </tr>
+
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Income tax at 20%</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">£XXX.XX</td>
+        </tr>
+
+
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">National Insurance</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">£0.00</td>
+        </tr>
+
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell govuk-!-font-weight-bold">Take-home pay</td>
+          <td class="govuk-table__cell govuk-!-font-weight-bold govuk-table__cell--numeric">£X,XXX.XX</td>
+        </tr>
+      </tbody>
+    </table>
+    {% endset -%}
+
+
+    {% set weeklyHtml %}
+    <div class="govuk-panel govuk-panel--confirmation">
+      <h2 class="govuk-panel__title">£XXX.XX<br>
+        <span class="govuk-panel__body">a week</span>
+      </h2>
+    </div>
+
+    <h2 class="govuk-heading-m">How we calculated this:</h2>
+
+    <table class="govuk-table">
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell govuk-!-font-weight-bold">Gross income</td>
+          <td class="govuk-table__cell govuk-!-font-weight-bold govuk-table__cell--numeric">£X,XXX.XX</td>
+        </tr>
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Personal Allowance</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">£XXX.XX</td>
+        </tr>
+
+
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell govuk-!-font-weight-bold">Taxable income</td>
+          <td class="govuk-table__cell govuk-!-font-weight-bold govuk-table__cell--numeric">£XXX.XX</td>
+        </tr>
+
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Income Tax at 20%</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">£XXX.XX</td>
+        </tr>
+
+
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">National Insurance</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">£0.00</td>
+        </tr>
+
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell govuk-!-font-weight-bold">Take-home pay</td>
+          <td class="govuk-table__cell govuk-!-font-weight-bold govuk-table__cell--numeric">£XXX.XX</td>
+        </tr>
+      </tbody>
+    </table>
+    {% endset -%}
+
+    {{ govukTabs({
+      items: [
+        {
+          label: "Yearly",
+          id: "yearly",
+          panel: {
+            html: yearlyHtml
+          }
+        },
+        {
+          label: "Monthly",
+          id: "monthly",
+          panel: {
+            html: monthlyHtml
+          }
+        },
+        {
+          label: "Weekly",
+          id: "weekly",
+          panel: {
+            html: weeklyHtml
+          }
+        }
+      ]
+    }) }}
+
+
+
+    
+
+    {% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
+
+    {{ govukInsetText({
+      text: "Our calculation does not account for any other deductions your employer might make before they pay you. We will not keep a record of your data for security reasons."
+    }) }}
+
+
+  </div>
+
+
+
+  <div class="govuk-grid-column-one-third" style="padding-top: 15px; padding-bottom: 15px; background-color: #F8F8F8;">
+    <h3 class="govuk-heading-s">For this calculation:</h3>
+    <ul class="govuk-list govuk-list--bullet govuk-list--spaced">
+
+
+        <li>You have 1 private pension.</li>
+
+
+      
+
+          <li>Your Personal Allowance is £12,570 (because you did not provide a tax code)</li>
+
+
+
+
+
+        <li>You do not pay National Insurance on a private pension.</li>
+
+
+    </ul>
+  </div>
+
+  <div class="govuk-grid-column-two-thirds">
+    <p class="govuk-body"></p>
+
+
+    {% from "govuk/components/button/macro.njk" import govukButton %}
+
+    <div class="govuk-button-group">
+    <form action="#" method="post">
+      {{ govukButton({
+        text: "Update answers"
+      }) }}
+    </form>
+
+      <a class="govuk-link" href="/manage-prototype/clear-data">Clear and start again</a>
+
+    </div>
+
+    <hr class="govuk-section-break govuk-section-break--visible">
+    <div class="govuk-!-margin-top-4 govuk-!-margin-bottom-4">
+      <p class="govuk-body">
+       <img src="https://www.tax.service.gov.uk/assets/4.9.0//images/icon-print.svg" alt="Print Icon">
+       <a class="govuk-link print-page" href="#">Print or save page</a></p>
+
+       <p><a href="#">Tell us what you think of this calculator (opens in a new tab)</a></p>
+     </div>
+  </div>
+
+
+</div>
+
+</div>
+</main>
+</div>
+
+{% endblock %}

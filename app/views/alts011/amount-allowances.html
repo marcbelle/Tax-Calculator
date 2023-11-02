@@ -1,0 +1,75 @@
+{% extends "layouts/main.html" %}
+
+{% set pageName="Allowances amount" %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+  <a class="govuk-back-link" onclick="history.back();" style="cursor:pointer;" >Back</a>
+<main class="govuk-main-wrapper " id="main-content" role="main">
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <h1 class="govuk-heading-xl">
+      How much are your allowances?
+    </h1>
+    <p>Most allowances reduce the amount of income you have to pay tax on. Some allowances, like the the marriage allowance, reduce your income tax.</p>
+    <form action="#" method="post">
+
+      {% from "govuk/components/input/macro.njk" import govukInput %}
+
+      {{ govukInput({
+        id: "allowances-amount",
+        name: "allowances-amount",
+        label: {
+          text: "Amount, in pounds",
+          classes: "govuk-label--m",
+          isPageHeading: false
+        },
+        hint: {
+          text: "For example, £600 or £193.54"
+        },
+        value: data['allowances-amount'],
+        prefix: {
+          text: "£"
+        },
+        classes: "govuk-input--width-10",
+        spellcheck: false
+      }) }}
+
+      {% from "govuk/components/radios/macro.njk" import govukRadios %}
+
+      {{ govukRadios({
+        name: "allowances-frequency",
+        value: data['allowances-frequency'],
+        fieldset: {
+          legend: {
+            text: "How often do you get this amount?",
+            isPageHeading: false,
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        items: [
+          {
+            value: "a year",
+            text: "Yearly"
+          },
+          {
+            value: "a month",
+            text: "Monthly"
+          }
+        ]
+      }) }}
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+
+
+  </div>
+</div>
+</main>
+</div>
+
+{% endblock %}
