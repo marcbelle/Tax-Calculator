@@ -31,6 +31,29 @@
         </strong>
       </div>
     {% endif %}
+
+    {% if (data['scottishTaxcode'] == true) %}
+          {% if (data['scottish-rate'] == "No") %}
+          <div class="govuk-warning-text">
+            <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+            <strong class="govuk-warning-text__text">
+              <span class="govuk-warning-text__assistive">Warning</span>
+              You used a Scottish taxcode even though you said you don't live there, so we have applied Scottish Income Tax rates.
+            </strong>
+          </div>
+          {% endif %}
+
+    {% else %}
+        {% if (data['scottish-rate'] == "Yes") %}
+          <div class="govuk-warning-text">
+            <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+            <strong class="govuk-warning-text__text">
+              <span class="govuk-warning-text__assistive">Warning</span>
+              You used an English taxcode even though you said you live in Scotland, so we have applied Scottish Income Tax rates.
+            </strong>
+          </div>
+        {% endif %}
+    {% endif %}
     
 
     {% from "govuk/components/tabs/macro.njk" import govukTabs %}
@@ -301,12 +324,12 @@
           {% if (data['scottish-rate'] == "Yes") %}
             <li>We have applied Scottish rates.</li>
           {% else %}
-            <li>You said you have a Scottish taxcode so we have applied those rates.</li>
+            <li>We have applied Scottish rates.</li>
           {% endif %}
 
       {% else %}
           {% if (data['scottish-rate'] == "Yes") %}
-            <li>You said you pay Scottish rates so we have applied those.</li>
+            <li>We have applied Scottish rates.</li>
             {% endif %}
       {% endif %}
 

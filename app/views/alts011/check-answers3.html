@@ -59,30 +59,14 @@
             </dd>
           </div>
           {% endif %}
-          <div class="govuk-summary-list__row">
-            <dt class="govuk-summary-list__key govuk-!-width-one-quarter">
-              Income type
-            </dt>
-            <dd class="govuk-summary-list__value govuk-!-width-one-third">
-              {% if (data['income-type'] == "job") %}
-                 Income from a job
-              {% else %}
-                 Private pension income
-              {% endif %}
-            </dd>
-            <dd class="govuk-summary-list__actions">
-              <a class="govuk-link" href="#">
-                Change<span class="govuk-visually-hidden"> gross income</span>
-              </a>
-            </dd>
-          </div>
-          {% if (data['income-type'] == "job") %}
+          
+          
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key govuk-!-width-one-quarter">
               Over State Pension age
             </dt>
             <dd class="govuk-summary-list__value govuk-!-width-one-third">
-              {{ data['state-pension-age'] }}
+              No
             </dd>
             <dd class="govuk-summary-list__actions">
               <a class="govuk-link" href="#">
@@ -90,7 +74,7 @@
               </a>
             </dd>
           </div>
-          {% endif %}          
+                   
         </dl>
 
 
@@ -120,7 +104,7 @@
 
             <div class="govuk-summary-list__row">
               <dt class="govuk-summary-list__key govuk-!-width-one-quarter">
-                Scottish Income Tax rate
+                Scottish Income Tax
               </dt>
               <dd class="govuk-summary-list__value govuk-!-width-one-third">
                 
@@ -134,7 +118,7 @@
             </div>
 
 
-            {% if (data['income-type'] == "job") %}
+            
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key govuk-!-width-one-quarter">
               Pension contributions
@@ -174,7 +158,7 @@
             </dd>
             
           </div>
-          {% endif %}          
+                   
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key govuk-!-width-one-quarter">
               Student loan

@@ -2,7 +2,7 @@
 
 {% set pageName="Check answers" %}
 
-{% set version="0-1-0" %}
+{% set version="0-1-1" %}
 
 
 {% block content %}
@@ -154,7 +154,7 @@
             {% if (data['tax-code'] == undefined) or (data['tax-code'] == "")  %}
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key govuk-!-width-one-quarter">
-              Scottish Income Tax rate
+              Scottish Income Tax
             </dt>
             <dd class="govuk-summary-list__value govuk-!-width-one-third">
               {% if (data['scottish-rate'] == undefined)%}
