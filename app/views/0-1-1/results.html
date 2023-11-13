@@ -70,19 +70,19 @@
         </tr>
         {% if (data['basicRateTotal'] != 0) %}
         <tr class="govuk-table__row">
-          <td class="govuk-table__cell">Income tax at 20%</td>
+          <td class="govuk-table__cell">Income Tax at 20%</td>
           <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['basicRateTotal'] | toFixed(2) | formatPounds }}</td>
         </tr>
         {% endif %}
         {% if (data['higherRateTotal'] != 0) %}
         <tr class="govuk-table__row">
-          <td class="govuk-table__cell">Income tax at 40%</td>
+          <td class="govuk-table__cell">Income Tax at 40%</td>
           <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['higherRateTotal'] | toFixed(2) | formatPounds }}</td>
         </tr>
         {% endif %}
         {% if (data['additionalRateTotal'] != 0) %}
         <tr class="govuk-table__row">
-          <td class="govuk-table__cell">Income tax at 45%</td>
+          <td class="govuk-table__cell">Income Tax at 45%</td>
           <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['additionalRateTotal'] | toFixed(2) | formatPounds }}</td>
         </tr>
         {% endif %}
@@ -138,19 +138,19 @@
         </tr>
         {% if (data['basicRateTotal'] != 0) %}
         <tr class="govuk-table__row">
-          <td class="govuk-table__cell">Income tax at 20%</td>
+          <td class="govuk-table__cell">Income Tax at 20%</td>
           <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['basicRateTotal_monthly'] | round(2) | toFixed(2) | formatPounds }}</td>
         </tr>
         {% endif %}
         {% if (data['higherRateTotal'] != 0) %}
         <tr class="govuk-table__row">
-          <td class="govuk-table__cell">Income tax at 40%</td>
+          <td class="govuk-table__cell">Income Tax at 40%</td>
           <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['higherRateTotal_monthly'] | round(2) | toFixed(2) | formatPounds }}</td>
         </tr>
         {% endif %}
         {% if (data['additionalRateTotal'] != 0) %}
         <tr class="govuk-table__row">
-          <td class="govuk-table__cell">Income tax at 45%</td>
+          <td class="govuk-table__cell">Income Tax at 45%</td>
           <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['additionalRateTotal_monthly'] | toFixed(2) | formatPounds }}</td>
         </tr>
         {% endif %}
@@ -217,7 +217,7 @@
         {% endif %}
         {% if (data['additionalRateTotal'] != 0) %}
         <tr class="govuk-table__row">
-          <td class="govuk-table__cell">Income tax at 45%</td>
+          <td class="govuk-table__cell">Income Tax at 45%</td>
           <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['additionalRateTotal_weekly'] | toFixed(2) | formatPounds }}</td>
         </tr>
         {% endif %}
