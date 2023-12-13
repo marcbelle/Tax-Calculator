@@ -13,9 +13,9 @@
   <div class="govuk-grid-column-two-thirds">
 
     <h1 class="govuk-heading-xl">
-      How much are your monthly pension contributions?
+      What percentage of your income do you pay into a pension each month?
     </h1>
-    <p class="govuk-body">Enter this as a percentage of your income. Do not include any contributions from your employer.</p>
+    <p class="govuk-body">Do not include any contributions from your employer.</p>
     <form action="#" method="post">
 
       {% from "govuk/components/input/macro.njk" import govukInput %}
@@ -39,7 +39,7 @@
         spellcheck: false
       }) }}
 
-      <p><a href="/{{version}}/amount-contributions-fixed" class="govuk-link">You can tell us the amount in pounds if you prefer.</a></p>
+      <p><a href="/{{version}}/amount-contributions-fixed" class="govuk-link">You can tell us the amount in pounds and pence if you prefer.</a></p>
       
       {{ govukButton({
         text: "Continue"
