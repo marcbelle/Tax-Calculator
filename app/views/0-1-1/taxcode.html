@@ -47,7 +47,7 @@
             <li>on a ‘Tax Code Notice’ letter from HMRC if you get one</li>
           </ul>
           {% if (data['yearlySalary'] > 100000) %}
-            <p class="govuk-body">If you do not know it and you earn over £100,000 a year, we will still calculate your <a href="https://www.gov.uk/income-tax-rates/income-over-100000" class="govuk-link" target="_blank">reduced Personal Allowance (opens in a new tab)</a>.</p>
+            <p class="govuk-body">If you do not know your tax code, you can leave it blank and we will calculate your <a href="https://www.gov.uk/income-tax-rates/income-over-100000" class="govuk-link" target="_blank">reduced Personal Allowance (opens in a new tab)</a>.</p>
           {% else %}
             <p class="govuk-body">If you leave it blank, we will use 1257L (unless you earn over £100,000 a year). 1257L is the most common tax code.</p>
           {% endif %}
