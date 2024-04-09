@@ -64,6 +64,12 @@
           <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['yearlyPensionContributions'] | toFixed(2) | formatPounds }}</td>
         </tr>
         {% endif %}
+        {% if (data['yearlyStudentLoan'] != 0) %}
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">Student loan</td>
+          <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['yearlyStudentLoan'] | toFixed(2) | formatPounds }}</td>
+        </tr>
+        {% endif %}
         <tr class="govuk-table__row">
           <td class="govuk-table__cell govuk-!-font-weight-bold">Taxable income</td>
           <td class="govuk-table__cell govuk-!-font-weight-bold govuk-table__cell--numeric">£{{ data['taxableIncomeTotal'] | toFixed(2) | formatPounds }}</td>
@@ -90,12 +96,6 @@
           <td class="govuk-table__cell">National Insurance</td>
           <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['nationalInsuranceTotal'] | toFixed(2) | formatPounds }}</td>
         </tr>
-        {% if (data['yearlyStudentLoan'] != 0) %}
-        <tr class="govuk-table__row">
-          <td class="govuk-table__cell">Student loan</td>
-          <td class="govuk-table__cell govuk-table__cell--numeric">£{{ data['yearlyStudentLoan'] | toFixed(2) | formatPounds }}</td>
-        </tr>
-        {% endif %}
         <tr class="govuk-table__row">
           <td class="govuk-table__cell govuk-!-font-weight-bold">Take-home pay</td>
           <td class="govuk-table__cell govuk-!-font-weight-bold govuk-table__cell--numeric">£{{ data['takeHomePay'] | toFixed(2) | formatPounds }}</td>
